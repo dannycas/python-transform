@@ -96,7 +96,7 @@ Markdown file will be created in the `./output/` directory
 ### Convert with specific output directory
 
 ```bash
-python main.py input.pdf -o ./moje_markdown_pliki
+python main.py input.pdf -o ./my_markdown_files
 ```
 
 ### Convert entire directory
