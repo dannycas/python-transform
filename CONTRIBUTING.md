@@ -1,89 +1,89 @@
-# Przewodnik Uczestnictwa (Contributing)
+# Contributing
 
-Dziękujemy zainteresowania w przyczynieniu się do projektu python-transform!
+Thank you for your interest in contributing to the python-transform project!
 
-## Jak możesz pomóc?
+## How can you help?
 
-### Zgłaszanie błędów
+### Reporting bugs
 
-Jeśli znalazłeś błąd, otwórz issue z:
-- Opisem problemu
-- Krokami reprodukcji
-- Oczekiwanym zachowaniem
-- Rzeczywistym zachowaniem
-- Informacjami o systemie (OS, wersja Pythona, itd.)
+If you found a bug, open an issue with:
+- Problem description
+- Steps to reproduce
+- Expected behavior
+- Actual behavior
+- System information (OS, Python version, etc.)
 
-### Sugestie ulepszeń
+### Feature suggestions
 
-Jeśli masz pomysł na nową funkcjonalność:
-- Otwórz issue z tytułem: `[FEATURE REQUEST]`
-- Opisz problem, który by to rozwiązało
-- Zaproponuj rozwiązanie (opcjonalnie)
+If you have an idea for a new feature:
+- Open an issue with the title: `[FEATURE REQUEST]`
+- Describe the problem it would solve
+- Propose a solution (optional)
 
-### Przygotowywanie Pull Requests
+### Preparing Pull Requests
 
-1. **Fork repozytorium**
+1. **Fork the repository**
    ```bash
    git clone https://github.com/yourusername/python-transform.git
    ```
 
-2. **Stwórz branch dla funkcji/poprawki**
+2. **Create a branch for your feature/fix**
    ```bash
-   git checkout -b feature/moja-nowa-funkcja
+   git checkout -b feature/my-new-feature
    ```
 
-3. **Zainstaluj zależności developerskie**
+3. **Install development dependencies**
    ```bash
    pip install -r requirements.txt
    pip install pytest flake8
    ```
 
-4. **Wprowadź zmiany**
-   - Pisz czytelny kod
-   - Dodaj docstringi
-   - Utrzymuj style istniejącego kodu
+4. **Make your changes**
+   - Write readable code
+   - Add docstrings
+   - Maintain the existing code style
 
-5. **Uruchom testy**
+5. **Run tests**
    ```bash
    python -m pytest tests/
    ```
 
-6. **Sprawdź jakość kodu**
+6. **Check code quality**
    ```bash
    flake8 --max-line-length=120 .
    ```
 
-7. **Commitnij zmiany**
+7. **Commit your changes**
    ```bash
-   git commit -am 'Dodaj moją nową funkcję'
+   git commit -am 'Add my new feature'
    ```
 
-8. **Push do brancha**
+8. **Push to your branch**
    ```bash
-   git push origin feature/moja-nowa-funkcja
+   git push origin feature/my-new-feature
    ```
 
-9. **Otwórz Pull Request**
-   - Opisz co zmieniłeś
-   - Linkuj powiązane issues
+9. **Open a Pull Request**
+   - Describe what you changed
+   - Link related issues
 
-## Standardy kodowania
+## Coding standards
 
-- PEP 8 compliance (max 120 znaków na linię)
-- Docstringi dla wszystkich funkcji/klas
-- Type hints gdzie to możliwe
-- Testy dla nowych funkcjonalności
+- PEP 8 compliance (max 120 characters per line)
+- Docstrings for all functions/classes
+- Type hints where possible
+- Tests for new functionality
 
-## Proces reviewu
+## Review process
 
-Wszystkie PR będą przejście review przed zaakceptowaniem:
-- Sprawdzenie kodu
-- Testy
-- Dokumentacja
-- Zgodność ze standardami
+All PRs will be reviewed before acceptance:
+- Code review
+- Tests
+- Documentation
+- Standards compliance
 
-## Pytania?
+## Questions?
 
-Otwórz issue lub skontaktuj się z maintainerami.
+Open an issue or contact the maintainers.
 
-Dziękujemy za wkład! 🎉
+Thank you for your contribution! 🎉

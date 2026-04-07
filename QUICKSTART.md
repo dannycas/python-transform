@@ -1,112 +1,112 @@
-# Szybki Start
+# Quick Start
 
-Przewodnik do szybkiego rozpoczęcia pracy z python-transform.
+Quick start guide for python-transform.
 
-## 1. Instalacja (2 minuty)
+## 1. Installation (2 minutes)
 
-### Wymagania systemowe
-- Python 3.8 lub nowszy
-- pip (menedżer pakietów Python)
+### System requirements
+- Python 3.8 or newer
+- pip (Python package manager)
 
-### Procedura instalacji
+### Installation procedure
 
 ```bash
-# Klonuj repozytorium
+# Clone the repository
 git clone https://github.com/yourusername/python-transform.git
 cd python-transform
 
-# Zainstaluj zależności
+# Install dependencies
 pip install -r requirements.txt
 ```
 
-## 2. Podstawowe użycie (1 minuta)
+## 2. Basic Usage (1 minute)
 
-### Konwersja pojedynczego PDF
-
-```bash
-python main.py moj_dokument.pdf
-```
-
-Plik będzie skonwertowany do `./output/moj_dokument.md`
-
-### Konwersja całego katalogu
+### Convert a single PDF
 
 ```bash
-python main.py ./moje_dokumenty -d
+python main.py my_document.pdf
 ```
 
-## 3. Przykłady (5 minut)
+File will be converted to `./output/my_document.md`
 
-### Przykład 1: PDF
+### Convert entire directory
 
 ```bash
-# Konwertuj plik PDF
-python main.py raport.pdf -o ./markdown_output
+python main.py ./my_documents -d
 ```
 
-**Output: `./markdown_output/raport.md`**
+## 3. Examples (5 minutes)
+
+### Example 1: PDF
+
+```bash
+# Convert PDF file
+python main.py report.pdf -o ./markdown_output
+```
+
+**Output: `./markdown_output/report.md`**
 
 ```markdown
 # PDF Document
-**Liczba stron:** 3
+**Number of pages:** 3
 
-## Strona 1
+## Page 1
 
-Zawartość tekstu ze strony 1...
+Text content from page 1...
 
-### Tabela 1
-| Kolumna 1 | Kolumna 2 |
+### Table 1
+| Column 1 | Column 2 |
 |-----------|-----------|
-| Dane 1    | Dane 2    |
+| Data 1    | Data 2    |
 ```
 
-### Przykład 2: Word dokument
+### Example 2: Word document
 
 ```bash
-python main.py instrukcja.docx -o ./docs
+python main.py instructions.docx -o ./docs
 ```
 
-**Output: `./docs/instrukcja.md`**
+**Output: `./docs/instructions.md`**
 
 ```markdown
-# Instrukcja
+# Instructions
 
-## Rozdziału 1
+## Chapter 1
 
-Zawartość z formatowaniem...
+Content with formatting...
 
-**Tekst pogrubiony** i *kursywa*
+**Bold text** and *italics*
 ```
 
-### Przykład 3: Obrazy
+### Example 3: Images
 
 ```bash
-# Konwertuj wszystkie obrazy z metadanymi
-python main.py ./zdjecia -d -o ./obrazy_md
+# Convert all images with metadata
+python main.py ./photos -d -o ./images_md
 ```
 
-### Przykład 4: Obrazy z wyciągnięciem tekstu (OCR)
+### Example 4: Images with text extraction (OCR)
 
 ```bash
-# Wymaga Tesseract-OCR
-python main.py ./przeskanowane -d --ocr -o ./tekst
+# Requires Tesseract-OCR
+python main.py ./scanned -d --ocr -o ./text
 ```
 
-## 4. Obsługiwane formaty
+## 4. Supported formats
 
-| Format | Rozszerzenie |
+| Format | Extension |
 |--------|------------|
 | PDF | `.pdf` |
 | Word | `.docx` |
-| Obrazy | `.png`, `.jpg`, `.bmp`, `.gif` |
+| Images | `.png`, `.jpg`, `.bmp`, `.gif` |
 
-## 5. Ustaw Tesseract OCR (Opcjonalnie)
+## 5. Set up Tesseract OCR (Optional)
 
 ### Windows
 
-1. Pobierz z: https://github.com/UB-Mannheim/tesseract/wiki
-2. Zainstaluj
-3. W Python:
+1. Download from: https://github.com/UB-Mannheim/tesseract/wiki
+2. Install
+3. In Python:
 
 ```python
 import pytesseract
@@ -126,30 +126,30 @@ sudo apt-get install tesseract-ocr-pol
 brew install tesseract
 ```
 
-## 6. Zaawansowane użycie
+## 6. Advanced usage
 
-### Konwersja rekursywna
-
-```bash
-python main.py ./projekt -d -r -o ./projekt_markdown
-```
-
-Konwertuje wszystkie obsługiwane pliki rekursywnie ze wszystkich podkatalogów.
-
-### Niestandardowy katalog wyjściowy
+### Recursive conversion
 
 ```bash
-python main.py dokument.pdf -o /moja/sciezka/output
+python main.py ./project -d -r -o ./project_markdown
 ```
 
-### Kombinacja opcji
+Converts all supported files recursively from all subdirectories.
+
+### Custom output directory
 
 ```bash
-# Katalog, rekursywnie, z OCR, do niestandardowego outputu
-python main.py ./dokumenty -d -r --ocr -o ./wynik
+python main.py document.pdf -o /my/path/output
 ```
 
-## 7. Rozwiązywanie problemów
+### Combination of options
+
+```bash
+# Directory, recursive, with OCR, to custom output
+python main.py ./documents -d -r --ocr -o ./result
+```
+
+## 7. Troubleshooting
 
 ### Problem: "No module named 'docx'"
 
@@ -160,8 +160,8 @@ pip install python-docx
 ### Problem: Tesseract not found
 
 Windows:
-- Pobierz i zainstaluj z: https://github.com/UB-Mannheim/tesseract/wiki
-- Ustaw ścieżkę w kodzie
+- Download and install from: https://github.com/UB-Mannheim/tesseract/wiki
+- Set path in code
 
 Linux/Mac:
 ```bash
@@ -172,22 +172,22 @@ sudo apt-get install tesseract-ocr
 brew install tesseract
 ```
 
-## 8. Dalsze kroki
+## 8. Next steps
 
-- 📖 Przeczytaj [README.md](README.md) aby poznać wszystkie opcje
-- 🔧 Sprawdź [examples.py](examples.py) dla więcej przykładów
-- 🐛 Zgłoś błędy na [GitHub Issues](https://github.com/yourusername/python-transform/issues)
-- 🤝 Weź udział w [CONTRIBUTING.md](CONTRIBUTING.md)
+- 📖 Read [README.md](README.md) to learn all available options
+- 🔧 Check [examples.py](examples.py) for more examples
+- 🐛 Report bugs on [GitHub Issues](https://github.com/yourusername/python-transform/issues)
+- 🤝 Contribute! See [CONTRIBUTING.md](CONTRIBUTING.md)
 
-## 9. Pomoc
+## 9. Help
 
 ```bash
-# Pełna dokumentacja opcji
+# Full documentation of options
 python main.py -h
 
-# Czy masz pytania? Otwórz issue!
+# Have questions? Open an issue!
 ```
 
 ---
 
-Powodzenia z python-transform! 🚀
+Good luck with python-transform! 🚀

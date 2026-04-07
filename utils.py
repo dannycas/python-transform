@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 
 def setup_logging(level=logging.INFO):
-    """Skonfiguruj logging."""
+    """Configure logging."""
     logging.basicConfig(
         level=level,
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
@@ -21,7 +21,7 @@ def setup_logging(level=logging.INFO):
 
 def get_supported_extensions() -> Dict[str, str]:
     """
-    Zwraca słownik obsługiwanych rozszerzeń i ich typów.
+    Return a dictionary of supported extensions and their types.
     
     Returns:
         Dict[str, str]: {'extension': 'type', ...}
@@ -42,13 +42,13 @@ def get_supported_extensions() -> Dict[str, str]:
 
 def is_supported(file_path: str) -> bool:
     """
-    Sprawdź czy plik ma obsługiwane rozszerzenie.
+    Check if the file has a supported extension.
     
     Args:
-        file_path: Ścieżka do pliku
+        file_path: Path to the file
         
     Returns:
-        bool: True jeśli format jest obsługiwany
+        bool: True if format is supported
     """
     ext = Path(file_path).suffix.lower()
     return ext in get_supported_extensions()
@@ -56,19 +56,19 @@ def is_supported(file_path: str) -> bool:
 
 def get_all_files(directory: str, recursive: bool = False) -> List[Path]:
     """
-    Pobierz wszystkie pliki z katalogu.
+    Get all files from a directory.
     
     Args:
-        directory: Ścieżka do katalogu
-        recursive: Czy szukać rekursywnie
+        directory: Path to the directory
+        recursive: Whether to search recursively
         
     Returns:
-        List[Path]: Lista plików
+        List[Path]: List of files
     """
     dir_path = Path(directory)
     
     if not dir_path.exists():
-        logger.error(f"Katalog nie istnieje: {directory}")
+        logger.error(f"Directory does not exist: {directory}")
         return []
     
     if recursive:
@@ -79,14 +79,14 @@ def get_all_files(directory: str, recursive: bool = False) -> List[Path]:
 
 def get_supported_files(directory: str, recursive: bool = False) -> List[Path]:
     """
-    Pobierz wszystkie obsługiwane pliki z katalogu.
+    Get all supported files from a directory.
     
     Args:
-        directory: Ścieżka do katalogu
-        recursive: Czy szukać rekursywnie
+        directory: Path to the directory
+        recursive: Whether to search recursively
         
     Returns:
-        List[Path]: Lista obsługiwanych plików
+        List[Path]: List of supported files
     """
     all_files = get_all_files(directory, recursive)
     return [f for f in all_files if f.is_file() and is_supported(str(f))]
@@ -94,13 +94,13 @@ def get_supported_files(directory: str, recursive: bool = False) -> List[Path]:
 
 def ensure_output_dir(output_dir: str) -> Path:
     """
-    Upewnij się że katalog wyjściowy istnieje.
+    Ensure that the output directory exists.
     
     Args:
-        output_dir: Ścieżka do katalogu wyjściowego
+        output_dir: Path to the output directory
         
     Returns:
-        Path: Ścieżka do stworzonym katalogu
+        Path: Path to the created directory
     """
     path = Path(output_dir)
     path.mkdir(parents=True, exist_ok=True)
@@ -110,13 +110,13 @@ def ensure_output_dir(output_dir: str) -> Path:
 
 def format_file_size(bytes_size: int) -> str:
     """
-    Sformatuj rozmiar pliku na czytelny format.
+    Format file size to a readable format.
     
     Args:
-        bytes_size: Rozmiar w bajtach
+        bytes_size: Size in bytes
         
     Returns:
-        str: Sformatowany rozmiar
+        str: Formatted size
     """
     for unit in ['B', 'KB', 'MB', 'GB']:
         if bytes_size < 1024.0:
@@ -128,21 +128,21 @@ def format_file_size(bytes_size: int) -> str:
 
 def print_conversion_summary(total: int, successful: int, failed: int):
     """
-    Wydrukuj podsumowanie konwersji.
+    Print the conversion summary.
     
     Args:
-        total: Całkowita liczba plików
-        successful: Liczba pomyślnie skonwertowanych
-        failed: Liczba nieudanychkonwersji
+        total: Total number of files
+        successful: Number of successfully converted files
+        failed: Number of failed conversions
     """
     print("\n" + "=" * 50)
-    print("PODSUMOWANIE KONWERSJI")
+    print("CONVERSION SUMMARY")
     print("=" * 50)
-    print(f"Zmapowanie: {successful}/{total}")
+    print(f"Processed: {successful}/{total}")
     
     if failed > 0:
-        print(f"Błędy: {failed}")
+        print(f"Errors: {failed}")
     
     success_rate = (successful / total * 100) if total > 0 else 0
-    print(f"Wskaźnik sukcesu: {success_rate:.1f}%")
+    print(f"Success rate: {success_rate:.1f}%")
     print("=" * 50 + "\n")

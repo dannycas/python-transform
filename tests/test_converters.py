@@ -1,5 +1,5 @@
 """
-Testy dla konwerterów dokumentów.
+Tests for document converters.
 """
 
 import unittest
@@ -14,59 +14,59 @@ from converters.base_converter import BaseConverter
 
 
 class TestBaseConverter(unittest.TestCase):
-    """Testy dla klasy bazowej konwertera."""
+    """Tests for base converter class."""
     
     def setUp(self):
-        # Używamy konkretnej implementacji do testowania
+        # Use a concrete implementation for testing
         self.converter = ImageConverter()
     
     def test_converter_exists(self):
-        """Test czy konwerter istnieje."""
+        """Test if converter exists."""
         self.assertIsNotNone(self.converter)
     
     def test_create_markdown_header_level_1(self):
-        """Test tworzenia nagłówka Markdown poziom 1."""
+        """Test creating Markdown header level 1."""
         header = self.converter._create_markdown_header('Test', level=1)
         self.assertEqual(header, '# Test\n\n')
     
     def test_create_markdown_header_level_2(self):
-        """Test tworzenia nagłówka Markdown poziom 2."""
+        """Test creating Markdown header level 2."""
         header = self.converter._create_markdown_header('Test', level=2)
         self.assertEqual(header, '## Test\n\n')
     
     def test_create_markdown_header_level_6(self):
-        """Test tworzenia nagłówka Markdown poziom 6."""
+        """Test creating Markdown header level 6."""
         header = self.converter._create_markdown_header('Test', level=6)
         self.assertEqual(header, '###### Test\n\n')
     
     def test_escape_markdown(self):
-        """Test escapeowania znaków specjalnych Markdown."""
+        """Test escaping special Markdown characters."""
         text = "Hello *world* with [link] and _underscore_"
         escaped = self.converter._escape_markdown(text)
         
-        # Sprawdzenie czy znaki zostały zachowane (escaped)
+        # Check if characters were properly escaped
         self.assertIn('\\*', escaped)
         self.assertIn('\\[', escaped)
         self.assertIn('\\_', escaped)
 
 
 class TestPDFConverter(unittest.TestCase):
-    """Testy dla konwertera PDF."""
+    """Tests for PDF converter."""
     
     def setUp(self):
         self.converter = PDFConverter()
         self.temp_dir = tempfile.mkdtemp()
     
     def test_converter_exists(self):
-        """Test czy konwerter PDF istnieje."""
+        """Test if PDF converter exists."""
         self.assertIsNotNone(self.converter)
     
     def test_converter_is_base_converter(self):
-        """Test czy PDFConverter dziedziczy z BaseConverter."""
+        """Test if PDFConverter inherits from BaseConverter."""
         self.assertIsInstance(self.converter, BaseConverter)
     
     def test_table_to_markdown_basic(self):
-        """Test konwersji prostej tabeli na Markdown."""
+        """Test converting simple table to Markdown."""
         table = [
             ['Header 1', 'Header 2', 'Header 3'],
             ['Row 1 Col 1', 'Row 1 Col 2', 'Row 1 Col 3'],
@@ -75,14 +75,14 @@ class TestPDFConverter(unittest.TestCase):
         
         result = self.converter._table_to_markdown(table)
         
-        # Sprawdzenia
+        # Verify
         self.assertIn('Header 1', result)
         self.assertIn('---', result)
         self.assertIn('|', result)
         self.assertIn('Row 1 Col 1', result)
     
     def test_table_to_markdown_with_none_values(self):
-        """Test konwersji tabeli z wartościami None."""
+        """Test converting table with None values."""
         table = [
             ['Col 1', 'Col 2'],
             ['Value 1', None],
@@ -91,18 +91,18 @@ class TestPDFConverter(unittest.TestCase):
         
         result = self.converter._table_to_markdown(table)
         
-        # Sprawdzenia - żadne wyjątki nie powinny być rzucane
+        # Verify - no exceptions should be thrown
         self.assertIsNotNone(result)
         self.assertIn('|', result)
     
     def test_table_to_markdown_empty_table(self):
-        """Test konwersji pustej tabeli."""
+        """Test converting empty table."""
         table = []
         result = self.converter._table_to_markdown(table)
         self.assertEqual(result, "")
     
     def test_table_to_markdown_single_row(self):
-        """Test konwersji tabeli z jednym wierszem."""
+        """Test converting table with one row."""
         table = [['Only', 'One', 'Row']]
         result = self.converter._table_to_markdown(table)
         
@@ -110,58 +110,58 @@ class TestPDFConverter(unittest.TestCase):
         self.assertIn('---', result)
     
     def test_convert_nonexistent_file(self):
-        """Test konwersji nieistniejącego pliku PDF."""
+        """Test converting non-existent PDF file."""
         result = self.converter.convert('/nonexistent/file.pdf')
         self.assertIsNone(result)
     
     def tearDown(self):
-        """Czyszczenie po testach."""
+        """Clean up after tests."""
         import shutil
         if os.path.exists(self.temp_dir):
             shutil.rmtree(self.temp_dir)
 
 
 class TestDOCXConverter(unittest.TestCase):
-    """Testy dla konwertera DOCX."""
+    """Tests for DOCX converter."""
     
     def setUp(self):
         self.converter = DOCXConverter()
     
     def test_converter_exists(self):
-        """Test czy konwerter DOCX istnieje."""
+        """Test if DOCX converter exists."""
         self.assertIsNotNone(self.converter)
     
     def test_converter_is_base_converter(self):
-        """Test czy DOCXConverter dziedziczy z BaseConverter."""
+        """Test if DOCXConverter inherits from BaseConverter."""
         self.assertIsInstance(self.converter, BaseConverter)
     
     def test_get_header_level_heading_1(self):
-        """Test poziomu nagłówka Heading 1."""
+        """Test header level for Heading 1."""
         self.assertEqual(self.converter._get_header_level('Heading 1'), 1)
     
     def test_get_header_level_heading_2(self):
-        """Test poziomu nagłówka Heading 2."""
+        """Test header level for Heading 2."""
         self.assertEqual(self.converter._get_header_level('Heading 2'), 2)
     
     def test_get_header_level_heading_3(self):
-        """Test poziomu nagłówka Heading 3."""
+        """Test header level for Heading 3."""
         self.assertEqual(self.converter._get_header_level('Heading 3'), 3)
     
     def test_get_header_level_heading_6(self):
-        """Test poziomu nagłówka Heading 6."""
+        """Test header level for Heading 6."""
         self.assertEqual(self.converter._get_header_level('Heading 6'), 6)
     
     def test_get_header_level_normal(self):
-        """Test poziomu nagłówka Normal (nie jest nagłówkiem)."""
+        """Test header level for Normal (not a header)."""
         self.assertEqual(self.converter._get_header_level('Normal'), 0)
     
     def test_get_header_level_case_insensitive(self):
-        """Test czy sprawdzanie jest case-insensitive."""
+        """Test if check is case-insensitive."""
         self.assertEqual(self.converter._get_header_level('heading 1'), 1)
         self.assertEqual(self.converter._get_header_level('HEADING 2'), 2)
     
     def test_format_run_bold(self):
-        """Test formatowania tekstu pogrubionego."""
+        """Test formatting bold text."""
         mock_run = MagicMock()
         mock_run.text = 'Bold Text'
         mock_run.bold = True
@@ -172,7 +172,7 @@ class TestDOCXConverter(unittest.TestCase):
         self.assertEqual(result, '**Bold Text**')
     
     def test_format_run_italic(self):
-        """Test formatowania tekstu kursywnego."""
+        """Test formatting italic text."""
         mock_run = MagicMock()
         mock_run.text = 'Italic Text'
         mock_run.bold = False
@@ -183,7 +183,7 @@ class TestDOCXConverter(unittest.TestCase):
         self.assertEqual(result, '*Italic Text*')
     
     def test_format_run_bold_and_italic(self):
-        """Test formatowania tekstu pogrubionego i kursywnego."""
+        """Test formatting bold and italic text."""
         mock_run = MagicMock()
         mock_run.text = 'Bold Italic'
         mock_run.bold = True
@@ -191,13 +191,13 @@ class TestDOCXConverter(unittest.TestCase):
         mock_run.underline = False
         
         result = self.converter._format_run(mock_run)
-        # Powinno zawierać oba formatowania
+        # Should contain both formatting types
         self.assertIn('**', result)
         self.assertIn('*', result)
     
     def test_table_to_markdown(self):
-        """Test konwersji tabeli DOCX na Markdown."""
-        # Tworzymy mock tabeli
+        """Test converting DOCX table to Markdown."""
+        # Create mock table
         mock_table = MagicMock()
         mock_row1 = MagicMock()
         mock_row2 = MagicMock()
@@ -233,24 +233,24 @@ class TestDOCXConverter(unittest.TestCase):
         self.assertIn('---', result)
     
     def test_convert_nonexistent_file(self):
-        """Test konwersji nieistniejącego pliku DOCX."""
+        """Test converting non-existent DOCX file."""
         result = self.converter.convert('/nonexistent/file.docx')
         self.assertIsNone(result)
 
 
 class TestImageConverter(unittest.TestCase):
-    """Testy dla konwertera obrazów."""
+    """Tests for image converter."""
     
     def setUp(self):
         self.converter = ImageConverter()
         self.temp_dir = tempfile.mkdtemp()
     
     def test_converter_exists(self):
-        """Test czy konwerter obrazów istnieje."""
+        """Test if image converter exists."""
         self.assertIsNotNone(self.converter)
     
     def test_converter_is_base_converter(self):
-        """Test czy ImageConverter dziedziczy z BaseConverter."""
+        """Test if ImageConverter inherits from BaseConverter."""
         self.assertIsInstance(self.converter, BaseConverter)
     
     def test_get_mime_type_png(self):
@@ -287,7 +287,7 @@ class TestImageConverter(unittest.TestCase):
         self.assertIsNone(result)
     
     def tearDown(self):
-        """Czyszczenie po testach."""
+        """Clean up after tests."""
         import shutil
         if os.path.exists(self.temp_dir):
             shutil.rmtree(self.temp_dir)

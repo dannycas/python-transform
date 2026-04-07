@@ -1,5 +1,5 @@
 """
-Konfiguracja dla skryptu konwersji.
+Configuration for the conversion script.
 """
 
 from dataclasses import dataclass
@@ -8,7 +8,7 @@ from typing import Optional, List
 
 @dataclass
 class ConversionConfig:
-    """Konfiguracja procesu konwersji."""
+    """Configuration for the conversion process."""
     
     # Directory settings
     input_dir: str = './documents'
@@ -47,11 +47,11 @@ class ConversionConfig:
             ]
 
 
-# Domyślna konfiguracja
+# Default configuration
 DEFAULT_CONFIG = ConversionConfig()
 
 
-# Konfiguracja dla szybkiej konwersji
+# Configuration for fast conversion
 FAST_CONFIG = ConversionConfig(
     pdf_extract_images=False,
     image_use_ocr=False,
@@ -59,7 +59,7 @@ FAST_CONFIG = ConversionConfig(
 )
 
 
-# Konfiguracja dla pełnej konwersji z OCR
+# Configuration for full conversion with OCR
 FULL_CONFIG = ConversionConfig(
     pdf_extract_images=True,
     image_use_ocr=True,
@@ -70,13 +70,13 @@ FULL_CONFIG = ConversionConfig(
 
 def get_config(config_name: str = 'default') -> ConversionConfig:
     """
-    Pobierz konfigurację na podstawie nazwy.
+    Get configuration by name.
     
     Args:
-        config_name: Nazwa konfiguracji ('default', 'fast', 'full')
+        config_name: Configuration name ('default', 'fast', 'full')
         
     Returns:
-        Obiekt ConversionConfig
+        ConversionConfig object
     """
     configs = {
         'default': DEFAULT_CONFIG,

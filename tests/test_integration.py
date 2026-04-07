@@ -62,7 +62,7 @@ class TestDocumentConverter(unittest.TestCase):
         self.assertIsNone(result)
     
     def tearDown(self):
-        """Czyszczenie po testach."""
+        """Clean up after tests."""
         if Path(self.temp_output).exists():
             shutil.rmtree(self.temp_output)
 
@@ -133,7 +133,7 @@ class TestUtilsIntegration(unittest.TestCase):
         self.assertEqual(len(files), 3)
     
     def tearDown(self):
-        """Czyszczenie po testach."""
+        """Clean up after tests."""
         if Path(self.temp_dir).exists():
             shutil.rmtree(self.temp_dir)
 

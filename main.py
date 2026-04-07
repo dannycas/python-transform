@@ -2,7 +2,7 @@
 """
 Document and Image to Markdown Converter
 
-Konwertuje dokumenty (PDF, DOCX) i obrazy (PNG, JPG, itd.) na pliki Markdown.
+Converts documents (PDF, DOCX) and images (PNG, JPG, etc.) to Markdown files.
 """
 
 import os
@@ -28,10 +28,10 @@ logger = logging.getLogger(__name__)
 
 class DocumentConverter:
     """
-    Główna klasa do konwersji dokumentów i obrazów na Markdown.
+    Main class for converting documents and images to Markdown.
     """
     
-    # Mapowanie typów plików na konwertery
+    # Map file types to converters
     CONVERTERS = {
         '.pdf': PDFConverter,
         '.docx': DOCXConverter,
@@ -47,10 +47,10 @@ class DocumentConverter:
     
     def __init__(self, output_dir: str = './output'):
         """
-        Inicjalizacja konwertera.
+        Initialize the converter.
         
         Args:
-            output_dir: Katalog wyjściowy dla plików Markdown
+            output_dir: Output directory for Markdown files
         """
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
@@ -58,31 +58,31 @@ class DocumentConverter:
     
     def convert_file(self, input_path: str, use_ocr: bool = False) -> Optional[Path]:
         """
-        Konwertuje pojedynczy plik na Markdown.
+        Convert a single file to Markdown.
         
         Args:
-            input_path: Ścieżka do pliku wejściowego
-            use_ocr: Czy używać OCR dla obrazów
+            input_path: Path to the input file
+            use_ocr: Whether to use OCR for images
             
         Returns:
-            Ścieżka do stworzonego pliku Markdown lub None
+            Path to the created Markdown file or None
         """
         input_file = Path(input_path)
         
         if not input_file.exists():
-            logger.error(f"Plik nie istnieje: {input_path}")
+            logger.error(f"File does not exist: {input_path}")
             return None
         
         file_ext = input_file.suffix.lower()
         
         if file_ext not in self.CONVERTERS:
-            logger.error(f"Nieobsługiwany format pliku: {file_ext}")
+            logger.error(f"Unsupported file format: {file_ext}")
             return None
         
         converter_class = self.CONVERTERS[file_ext]
         converter: BaseConverter = converter_class()
         
-        logger.info(f"Konwertowanie: {input_file.name}")
+        logger.info(f"Converting: {input_file.name}")
         
         try:
             output_path = self.output_dir / f"{input_file.stem}.md"
@@ -95,39 +95,39 @@ class DocumentConverter:
             if markdown_content:
                 with open(output_path, 'w', encoding='utf-8') as f:
                     f.write(markdown_content)
-                logger.info(f"✓ Plik utworzony: {output_path}")
+                logger.info(f"✓ File created: {output_path}")
                 return output_path
             else:
-                logger.error(f"Nie udało się konwertować: {input_path}")
+                logger.error(f"Failed to convert: {input_path}")
                 return None
                 
         except Exception as e:
-            logger.error(f"Błąd konwersji: {e}")
+            logger.error(f"Conversion error: {e}")
             return None
     
     def convert_directory(self, input_dir: str, recursive: bool = False, use_ocr: bool = False) -> List[Path]:
         """
-        Konwertuje wszystkie obsługiwane pliki w katalogu.
+        Convert all supported files in a directory.
         
         Args:
-            input_dir: Katalog wejściowy
-            recursive: Czy szukać rekursywnie w podkatalogach
-            use_ocr: Czy używać OCR dla obrazów
+            input_dir: Input directory
+            recursive: Whether to search recursively in subdirectories
+            use_ocr: Whether to use OCR for images
             
         Returns:
-            Lista ścieżek do stworzonych plików Markdown
+            List of paths to created Markdown files
         """
         input_path = Path(input_dir)
         
         if not input_path.exists():
-            logger.error(f"Katalog nie istnieje: {input_dir}")
+            logger.error(f"Directory does not exist: {input_dir}")
             return []
         
-        logger.info(f"Szukanie plików w: {input_dir}")
+        logger.info(f"Searching for files in: {input_dir}")
         
         results = []
         
-        # Szukanie plików
+        # Search for files
         if recursive:
             pattern = '**/*'
         else:
@@ -139,40 +139,40 @@ class DocumentConverter:
                 if result:
                     results.append(result)
         
-        logger.info(f"Skonwertowano {len(results)} plików")
+        logger.info(f"Converted {len(results)} files")
         return results
 
 
 def main():
-    """Główna funkcja."""
+    """Main function."""
     parser = argparse.ArgumentParser(
-        description='Konwertuje dokumenty i obrazy na pliki Markdown',
+        description='Convert documents and images to Markdown files',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
-Przykłady użycia:
-  # Konwersja pojedynczego pliku
+Usage examples:
+  # Convert a single file
   python main.py input.pdf
   
-  # Konwersja z zapisem w innym katalogu
+  # Convert to a different output directory
   python main.py input.pdf -o ./markdown_files
   
-  # Konwersja całego katalogu
+  # Convert entire directory
   python main.py ./documents -d
   
-  # Konwersja rekursywnie z OCR dla obrazów
+  # Recursively convert with OCR for images
   python main.py ./files -d -r --ocr
         """
     )
     
-    parser.add_argument('input', help='Plik lub katalog do konwersji')
+    parser.add_argument('input', help='File or directory to convert')
     parser.add_argument('-o', '--output', default='./output', 
-                        help='Katalog wyjściowy (domyślnie: ./output)')
+                        help='Output directory (default: ./output)')
     parser.add_argument('-d', '--directory', action='store_true',
-                        help='Tryb katalogowy - konwertuj wszystkie pliki w katalogu')
+                        help='Directory mode - convert all files in directory')
     parser.add_argument('-r', '--recursive', action='store_true',
-                        help='Szukaj rekursywnie w podkatalogach')
+                        help='Search recursively in subdirectories')
     parser.add_argument('--ocr', action='store_true',
-                        help='Używaj OCR dla obrazów (wymaga pytesseract i Tesseract-OCR)')
+                        help='Use OCR for images (requires pytesseract and Tesseract-OCR)')
     
     args = parser.parse_args()
     
@@ -188,10 +188,10 @@ Przykłady użycia:
         else:
             converter.convert_file(args.input, use_ocr=args.ocr)
     except KeyboardInterrupt:
-        logger.warning("Przerwano przez użytkownika")
+        logger.warning("Interrupted by user")
         sys.exit(1)
     except Exception as e:
-        logger.error(f"Błąd: {e}")
+        logger.error(f"Error: {e}")
         sys.exit(1)
 
 

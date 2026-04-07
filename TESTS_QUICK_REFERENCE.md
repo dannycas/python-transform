@@ -1,164 +1,164 @@
-# Podsumowanie Testów
+# Test Summary
 
-## 📊 Statystyka Testów
+## 📊 Test Statistics
 
 ```
-Razem testów: 69
+Total tests: 69
 ├── Unit Tests: 44
 └── Integration Tests: 25
 
-Status: ✅ GOTOWE DO URUCHOMIENIA
+Status: ✅ READY TO RUN
 ```
 
-## 🏗️ Struktura Testów
+## 🏗️ Test Structure
 
 ```
 tests/
 ├── __init__.py
-├── test_converters.py        # 44 unit testy
-│   ├── TestBaseConverter (6 testów)
-│   ├── TestPDFConverter (7 testów)
-│   ├── TestDOCXConverter (15 testów)
-│   ├── TestImageConverter (10 testów)
-│   └── TestUtilsFunctions (6 testów)
+├── test_converters.py        # 44 unit tests
+│   ├── TestBaseConverter (6 tests)
+│   ├── TestPDFConverter (7 tests)
+│   ├── TestDOCXConverter (15 tests)
+│   ├── TestImageConverter (10 tests)
+│   └── TestUtilsFunctions (6 tests)
 │
-└── test_integration.py        # 25 testów integracyjnych
-    ├── TestDocumentConverter (8 testów)
-    ├── TestUtilsIntegration (9 testów)
-    ├── TestConverterIntegration (3 testy)
-    └── TestConfigurationModule (5 testów)
+└── test_integration.py        # 25 integration tests
+    ├── TestDocumentConverter (8 tests)
+    ├── TestUtilsIntegration (9 tests)
+    ├── TestConverterIntegration (3 tests)
+    └── TestConfigurationModule (5 tests)
 ```
 
-## 🚀 Szybki Start - Uruchamianie Testów
+## 🚀 Quick Start - Running Tests
 
-### Opcja 1: Skrypt run_tests.py (ZALECANE)
+### Option 1: run_tests.py script (RECOMMENDED)
 
 ```bash
-# Wszystkie testy
+# All tests
 python run_tests.py
 
-# Tylko unit testy
+# Unit tests only
 python run_tests.py -u
 
-# Tylko integration testy
+# Integration tests only
 python run_tests.py -i
 
-# Konkretny test
+# Specific test
 python run_tests.py -t tests.test_converters.TestPDFConverter
 
-# Mniej szczegółów
+# Less detail
 python run_tests.py -v 1
 ```
 
-### Opcja 2: Unittest (Python - wbudowany)
+### Option 2: Unittest (Python - built-in)
 
 ```bash
-# Wszystkie testy
+# All tests
 python -m unittest discover -s tests -p "test_*.py" -v
 
-# Konkretny plik
+# Specific file
 python -m unittest tests.test_converters -v
 
-# Konkretna klasa
+# Specific class
 python -m unittest tests.test_converters.TestPDFConverter -v
 
-# Konkretny test
+# Specific test
 python -m unittest tests.test_converters.TestPDFConverter.test_converter_exists -v
 ```
 
-### Opcja 3: Pytest (jeśli zainstalowany)
+### Option 3: Pytest (if installed)
 
 ```bash
-# Instalacja
+# Installation
 pip install pytest pytest-cov
 
-# Wszystkie testy
+# All tests
 pytest
 
-# Z pokryciem kodu
+# With code coverage
 pytest --cov=converters --cov=main --cov=utils --cov-report=html
 
-# Tylko unit testy
+# Unit tests only
 pytest tests/test_converters.py -v
 
-# Z więcej działań
+# More details
 pytest -vv --tb=long
 ```
 
-## 📋 Szczegółowy Opis Testów
+## 📋 Detailed Test Description
 
 ### Unit Tests - test_converters.py
 
-#### <BaseConverter> - 6 testów
-Sprawdza funkcjonalność klasy bazowej konwertera:
-- Istnienie konwertera
-- Tworzenie nagłówków Markdown (poziom 1-6)
-- Escapeowanie znaków specjalnych
+#### <BaseConverter> - 6 tests
+Tests for the base converter class:
+- Converter existence
+- Create Markdown headers (level 1-6)
+- Escape special characters
 
-#### <PDFConverter> - 7 testów
-Konwerter PDF na Markdown:
-- ✓ Konwersja prostych tabel
-- ✓ Obsługa wartości None w tabelach
-- ✓ Puste tabele
-- ✓ Tabele z jednym wierszem
-- ✓ Konwersja nieistniejących plików
+#### <PDFConverter> - 7 tests
+PDF to Markdown converter:
+- ✓ Simple table conversion
+- ✓ Support for None values in tables
+- ✓ Empty tables
+- ✓ Single-row tables
+- ✓ Nonexistent file conversion
 
-#### <DOCXConverter> - 15 testów
-Konwerter DOCX na Markdown:
-- ✓ Określanie poziomów nagłówków (1-6)
-- ✓ Formatowanie tekstu (bold, italic, underline)
-- ✓ Case-insensitive sprawdzanie
-- ✓ Konwersja tabel
-- ✓ Obsługa błędów
+#### <DOCXConverter> - 15 tests
+DOCX to Markdown converter:
+- ✓ Determine header levels (1-6)
+- ✓ Text formatting (bold, italic, underline)
+- ✓ Case-insensitive checking
+- ✓ Table conversion
+- ✓ Error handling
 
-#### <ImageConverter> - 10 testów
-Konwerter obrazów na Markdown:
-- ✓ MIME types dla formatów (PNG, JPG, GIF, BMP, WebP, TIFF)
-- ✓ Nieznane formaty
-- ✓ Obsługa błędów
+#### <ImageConverter> - 10 tests
+Image to Markdown converter:
+- ✓ MIME types for formats (PNG, JPG, GIF, BMP, WebP, TIFF)
+- ✓ Unknown formats
+- ✓ Error handling
 
-#### <Utils Functions> - 6 testów
-Funkcje pomocnicze:
-- ✓ Sprawdzanie obsługiwaności (is_supported)
-- ✓ Obsługa PDF, DOCX, formatów obrazów
-- ✓ Odrzucanie nieobsługiwanych formatów
+#### <Utils Functions> - 6 tests
+Helper functions:
+- ✓ Format support checking (is_supported)
+- ✓ Support PDF, DOCX, image formats
+- ✓ Reject unsupported formats
 
 ---
 
 ### Integration Tests - test_integration.py
 
-#### <DocumentConverter> - 8 testów
-Główna klasa systemu:
-- ✓ Inicjalizacja konwertera
-- ✓ Obsługiwane formaty zdefiniowane
-- ✓ Katalog wyjściowy stworzony
-- ✓ Przypadki błędów
+#### <DocumentConverter> - 8 tests
+Main system class:
+- ✓ Converter initialization
+- ✓ Supported formats defined
+- ✓ Output directory created
+- ✓ Error cases
 
-#### <Utils Integration> - 9 testów
-Funkcjonalność utils w kontekście:
-- ✓ Lista obsługiwanych rozszerzeń
+#### <Utils Integration> - 9 tests
+Utils functionality in context:
+- ✓ List of supported extensions
 - ✓ Case-insensitive matching
-- ✓ Filtrowanie plików
-- ✓ Formatowanie rozmiaru pliku
-- ✓ Diaphragm katalogu wyjściowego
+- ✓ File filtering
+- ✓ File size formatting
+- ✓ Output directory creation
 
-#### <Converter Integration> - 3 testy
-Integracja konwerterów:
-- ✓ Wszystkie konwertery mogą być importowane
-- ✓ Wszystkie dziedziczą z BaseConverter
-- ✓ Wszystkie mają metodę convert()
+#### <Converter Integration> - 3 tests
+Converter integration:
+- ✓ All converters can be imported
+- ✓ All inherit from BaseConverter
+- ✓ All have convert() method
 
-#### <Configuration> - 5 testów
-Konfiguracja systemu:
-- ✓ Import modułu config
-- ✓ Konfiguracja domyślna
-- ✓ Konfiguracja szybka
-- ✓ Konfiguracja pełna/extended
+#### <Configuration> - 5 tests
+System configuration:
+- ✓ Import config module
+- ✓ Default configuration
+- ✓ Fast configuration
+- ✓ Full/extended configuration
 
-## 📈 Pokrycie Kodu
+## 📈 Code Coverage
 
-| Moduł | Pokrycie |
-|-------|---------|
+| Module | Coverage |
+|--------|----------|
 | converters/base_converter.py | 100% ✓ |
 | converters/pdf_converter.py | 95% ✓ |
 | converters/docx_converter.py | 90% ✓ |
@@ -166,50 +166,50 @@ Konfiguracja systemu:
 | main.py | 85% ✓ |
 | utils.py | 90% ✓ |
 | config.py | 95% ✓ |
-| **ŚREDNIE** | **~91%** ✓ |
+| **AVERAGE** | **~91%** ✓ |
 
-## 🔍 Co Jest Testowane
+## 🔍 What's Tested
 
-✅ **Konwertery**
-- Konwersja PDF na Markdown
-- Konwersja DOCX na Markdown
-- Konwersja obrazów na Markdown
+✅ **Converters**
+- PDF Conversion to Markdown
+- DOCX Conversion to Markdown
+- Image Conversion to Markdown
 
-✅ **Tabele**
-- Proste tabele
-- Tabele z wartościami None
-- Puste tabele
-- Tabele jednostronicowe
+✅ **Tables**
+- Simple tables
+- Tables with None values
+- Empty tables
+- Single-column tables
 
-✅ **Formatowanie**
-- Nagłówki (poziom 1-6)
-- Tekst pogrubiony
-- Tekst kursywny
-- Tekst podkreślony
+✅ **Formatting**
+- Headers (level 1-6)
+- Bold text
+- Italic text
+- Underlined text
 
-✅ **Formaty Plików**
+✅ **File Formats**
 - PDF
 - DOCX, DOC
 - PNG, JPG, JPEG, BMP, GIF, TIFF, WebP
 
-✅ **Obsługa Błędów**
-- Nieistniejące pliki
-- Nieobsługiwane formaty
-- Puste dane
-- Wyjątki
+✅ **Error Handling**
+- Nonexistent files
+- Unsupported formats
+- Empty data
+- Exceptions
 
 ✅ **Utility Functions**
-- Sprawdzanie obsługiwaności
-- Filtrowanie plików
-- Formatowanie rozmiaru
+- Format support checking
+- File filtering
+- Size formatting
 - Case-insensitive matching
 
-## 🛠️ Wymagania Systemu
+## 🛠️ System Requirements
 
-### Obowiązkowe
+### Required
 - Python 3.8+
 
-### Opcjonalne (dla pełnego testowania)
+### Optional (for full testing)
 ```bash
 pip install -r requirements-dev.txt
 ```
@@ -221,52 +221,52 @@ Includes:
 - black
 - mypy
 
-## 📁 Dodatkowe Pliki Testowe
+## 📁 Additional Test Files
 
-| Plik | Opis |
-|------|------|
-| run_tests.py | Skrypt do uruchamiania testów |
-| pytest.ini | Konfiguracja pytest |
-| TESTING.md | Pełna dokumentacja testów |
-| TEST_SUMMARY.md | Szczegółowe podsumowanie |
+| File | Description |
+|------|-------------|
+| run_tests.py | Test runner script |
+| pytest.ini | Pytest configuration |
+| TESTING.md | Full test documentation |
+| TEST_SUMMARY.md | Detailed summary |
 
-## 🎯 Następne Kroki
+## 🎯 Next Steps
 
-1. Uruchom testy: `python run_tests.py`
-2. Sprawdź wyniki
-3. Dla CI/CD: `pytest --cov`
-4. Wygeneruj raport: `pytest --cov --cov-report=html`
+1. Run tests: `python run_tests.py`
+2. Check results
+3. For CI/CD: `pytest --cov`
+4. Generate report: `pytest --cov --cov-report=html`
 
-## 💡 Przydatne Komendy
+## 💡 Useful Commands
 
 ```bash
-# Szybko - tylko krytyczne
+# Quick - only critical tests
 python -m unittest tests.test_converters -v
 
-# Pełnie - wszystko
+# Full - everything
 pytest --cov --cov-report=html
 
-# Z filtrem - konkretna klasa
+# With filter - specific class
 python -m unittest tests.test_converters.TestPDFConverter
 
-# Verbose - dużo informacji
+# Verbose - lots of information
 pytest -vv --tb=long --capture=no
 ```
 
 ## ✅ Checklist
 
-- [x] Unit testy dla konwerterów
-- [x] Integration testy dla systemu
-- [x] Testy utility functions
-- [x] Testy konfiguracji
-- [x] Mocking dla zewnętrznych zależności
-- [x] Dokumentacja testów
-- [x] Run_tests.py skrypt
-- [x] pytest.ini konfiguracja
-- [x] >90% pokrycie kodu
+- [x] Unit tests for converters
+- [x] Integration tests for system
+- [x] Utility functions tests
+- [x] Configuration tests
+- [x] Mocking for external dependencies
+- [x] Test documentation
+- [x] run_tests.py script
+- [x] pytest.ini configuration
+- [x] >90% code coverage
 
 ---
 
-**Status:** ✅ GOTOWE
-**Liczba testów:** 69
-**Pokrycie:** ~91%
+**Status:** ✅ READY
+**Number of tests:** 69
+**Coverage:** ~91%

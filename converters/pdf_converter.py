@@ -1,5 +1,5 @@
 """
-Konwerter PDF na Markdown.
+PDF to Markdown converter.
 """
 
 import logging
@@ -12,64 +12,64 @@ logger = logging.getLogger(__name__)
 
 
 class PDFConverter(BaseConverter):
-    """Konwertuje pliki PDF na Markdown."""
+    """Convert PDF files to Markdown."""
     
     def convert(self, file_path: str, **kwargs) -> Optional[str]:
         """
-        Konwertuje PDF na Markdown.
+        Convert PDF to Markdown.
         
         Args:
-            file_path: Ścieżka do pliku PDF
+            file_path: Path to the PDF file
             
         Returns:
-            Zawartość Markdown
+            Markdown content
         """
         try:
             markdown_content = []
             
             with pdfplumber.open(file_path) as pdf:
-                # Dodaj informacje o dokumencie
+                # Add document information
                 markdown_content.append(f"# PDF Document\n")
-                markdown_content.append(f"**Liczba stron:** {len(pdf.pages)}\n\n")
+                markdown_content.append(f"**Number of pages:** {len(pdf.pages)}\n\n")
                 
-                # Przetwórz każdą stronę
+                # Process each page
                 for page_num, page in enumerate(pdf.pages, 1):
-                    # Nagłówek strony
-                    markdown_content.append(f"## Strona {page_num}\n\n")
+                    # Page header
+                    markdown_content.append(f"## Page {page_num}\n\n")
                     
-                    # Ekstrakcja tekstu
+                    # Text extraction
                     text = page.extract_text()
                     if text:
                         markdown_content.append(text)
                         markdown_content.append("\n\n")
                     
-                    # Ekstrakcja tabel
+                    # Table extraction
                     tables = page.extract_tables()
                     if tables:
                         for table_num, table in enumerate(tables, 1):
-                            markdown_content.append(f"### Tabela {table_num}\n\n")
+                            markdown_content.append(f"### Table {table_num}\n\n")
                             markdown_content.append(self._table_to_markdown(table))
                             markdown_content.append("\n\n")
             
             return ''.join(markdown_content)
             
         except Exception as e:
-            logger.error(f"Błąd konwersji PDF: {e}")
+            logger.error(f"PDF conversion error: {e}")
             return None
     
     def _table_to_markdown(self, table: list) -> str:
-        """Konwertuje tabelę na format Markdown."""
+        """Convert table to Markdown format."""
         if not table or not table[0]:
             return ""
         
         lines = []
         
         for row_idx, row in enumerate(table):
-            # Konwertuj None na pusty string
+            # Convert None to empty string
             row_cells = [str(cell) if cell is not None else "" for cell in row]
             lines.append("| " + " | ".join(row_cells) + " |")
             
-            # Dodaj separator po nagłówku (pierwszy wiersz)
+            # Add separator after header (first row)
             if row_idx == 0:
                 separator = "|" + "|".join(["---"] * len(row)) + "|"
                 lines.append(separator)

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Runner dla testów z różnymi opcjami i raportowaniem.
+Test runner with various options and reporting.
 """
 
 import sys
@@ -8,16 +8,16 @@ import unittest
 import os
 from pathlib import Path
 
-# Dodaj główny katalog do path
+# Add main directory to path
 main_dir = Path(__file__).parent
 sys.path.insert(0, str(main_dir))
 
 def run_all_tests(verbosity=2):
-    """Uruchom wszystkie testy."""
+    """Run all tests."""
     loader = unittest.TestLoader()
     suite = unittest.TestSuite()
     
-    # Załaduj testy z katalogu tests
+    # Load tests from tests directory
     tests_dir = main_dir / 'tests'
     suite.addTests(loader.discover(str(tests_dir), pattern='test_*.py'))
     
@@ -28,7 +28,7 @@ def run_all_tests(verbosity=2):
 
 
 def run_unit_tests(verbosity=2):
-    """Uruchom tylko unit testy."""
+    """Run unit tests only."""
     loader = unittest.TestLoader()
     suite = unittest.TestSuite()
     
@@ -42,7 +42,7 @@ def run_unit_tests(verbosity=2):
 
 
 def run_integration_tests(verbosity=2):
-    """Uruchom tylko testy integracyjne."""
+    """Run integration tests only."""
     loader = unittest.TestLoader()
     suite = unittest.TestSuite()
     
@@ -56,7 +56,7 @@ def run_integration_tests(verbosity=2):
 
 
 def run_specific_test(test_name, verbosity=2):
-    """Uruchom konkretny test."""
+    """Run a specific test."""
     loader = unittest.TestLoader()
     
     try:
@@ -65,14 +65,14 @@ def run_specific_test(test_name, verbosity=2):
         result = runner.run(suite)
         return result
     except Exception as e:
-        print(f"Błąd: {e}")
+        print(f"Error: {e}")
         return None
 
 
 def print_test_summary(result):
-    """Wydrukuj podsumowanie testów."""
+    """Print test summary."""
     print("\n" + "=" * 70)
-    print("PODSUMOWANIE TESTÓW")
+    print("TEST SUMMARY")
     print("=" * 70)
     
     total_tests = result.testsRun
@@ -80,59 +80,59 @@ def print_test_summary(result):
     errors = len(result.errors)
     successful = total_tests - failures - errors
     
-    print(f"Całkowita liczba testów: {total_tests}")
-    print(f"Pomyślne: {successful} ✓")
-    print(f"Błędy: {errors} ✗")
-    print(f"Awarie: {failures} ✗")
+    print(f"Total tests: {total_tests}")
+    print(f"Successful: {successful} ✓")
+    print(f"Errors: {errors} ✗")
+    print(f"Failures: {failures} ✗")
     
     if failures > 0:
-        print(f"\nAwarunki:")
+        print(f"\nFailures:")
         for test, traceback in result.failures:
             print(f"  - {test}")
     
     if errors > 0:
-        print(f"\nBłędy:")
+        print(f"\nErrors:")
         for test, traceback in result.errors:
             print(f"  - {test}")
     
     success_rate = (successful / total_tests * 100) if total_tests > 0 else 0
-    print(f"\nStosunek sukcesu: {success_rate:.1f}%")
+    print(f"\nSuccess rate: {success_rate:.1f}%")
     print("=" * 70)
     
     return result.wasSuccessful()
 
 
 def main():
-    """Główna funkcja."""
+    """Main function."""
     import argparse
     
     parser = argparse.ArgumentParser(
-        description='Runner dla testów python-transform',
+        description='Test runner for python-transform',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
-Przykłady:
-  python run_tests.py                           # Uruchom wszystkie testy
-  python run_tests.py -u                        # Tylko unit testy
-  python run_tests.py -i                        # Tylko testy integracyjne
-  python run_tests.py -t tests.test_converters  # Konkretny test
-  python run_tests.py -v 1                      # Mało informacji (verbose=1)
-  python run_tests.py -a                        # Wszystko (domyślnie)
+Examples:
+  python run_tests.py                           # Run all tests
+  python run_tests.py -u                        # Unit tests only
+  python run_tests.py -i                        # Integration tests only
+  python run_tests.py -t tests.test_converters  # Specific test
+  python run_tests.py -v 1                      # Less info (verbose=1)
+  python run_tests.py -a                        # All (default)
         """
     )
     
     group = parser.add_mutually_exclusive_group()
     group.add_argument('-a', '--all', action='store_true',
-                       help='Uruchom wszystkie testy (domyślnie)', default=True)
+                       help='Run all tests (default)', default=True)
     group.add_argument('-u', '--unit', action='store_true',
-                       help='Uruchom tylko unit testy')
+                       help='Run unit tests only')
     group.add_argument('-i', '--integration', action='store_true',
-                       help='Uruchom tylko testy integracyjne')
+                       help='Run integration tests only')
     group.add_argument('-t', '--test', type=str, metavar='TEST_NAME',
-                       help='Uruchom konkretny test')
+                       help='Run specific test')
     
     parser.add_argument('-v', '--verbosity', type=int, default=2, 
                         choices=[0, 1, 2],
-                        help='Poziom szczegółowości (0=minimum, 2=maximum)')
+                        help='Verbosity level (0=minimum, 2=maximum)')
     
     args = parser.parse_args()
     
@@ -141,26 +141,26 @@ Przykłady:
     print("=" * 70)
     print()
     
-    # Uruchom odpowiednie testy
+    # Run appropriate tests
     if args.unit:
-        print("Uruchamianie UNIT TESTS...\n")
+        print("Running UNIT TESTS...\n")
         result = run_unit_tests(args.verbosity)
     elif args.integration:
-        print("Uruchamianie INTEGRATION TESTS...\n")
+        print("Running INTEGRATION TESTS...\n")
         result = run_integration_tests(args.verbosity)
     elif args.test:
-        print(f"Uruchamianie: {args.test}\n")
+        print(f"Running: {args.test}\n")
         result = run_specific_test(args.test, args.verbosity)
         if result is None:
             sys.exit(1)
     else:
-        print("Uruchamianie WSZYSTKICH TESTS...\n")
+        print("Running ALL TESTS...\n")
         result = run_all_tests(args.verbosity)
     
-    # Wydrukuj podsumowanie
+    # Print summary
     success = print_test_summary(result)
     
-    # Zakończenie
+    # Exit
     sys.exit(0 if success else 1)
 
 

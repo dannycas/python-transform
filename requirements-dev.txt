@@ -1,9 +1,10 @@
 # Development dependencies
 -r requirements.txt
 
-pytest==7.4.3
-pytest-cov==4.1.0
-flake8==6.1.0
-black==23.12.0
-mypy==1.7.1
-pylint==3.0.3
+pytest>=7.4.3,<8.0
+pytest-cov>=4.1.0,<5.0
+flake8>=6.1.0,<7.0
+black>=23.12.0,<25.0
+mypy>=1.7.1,<2.0
+pylint>=3.0.3,<4.0
+pytest-watch>=4.2.0

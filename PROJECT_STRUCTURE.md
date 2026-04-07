@@ -1,193 +1,193 @@
-# Struktura projektu - python-transform
+# Project Structure - python-transform
 
-## 📁 Struktura katalogów
+## 📁 Directory Structure
 
 ```
 python-transform/
 │
-├── 📄 main.py                    # Główny skrypt konwersji
-├── 📄 config.py                  # Konfiguracja projektu
+├── 📄 main.py                    # Main conversion script
+├── 📄 config.py                  # Project configuration
 ├── 📄 utils.py                   # Utility functions
-├── 📄 examples.py                # Przykłady użycia
+├── 📄 examples.py                # Usage examples
 │
-├── 📁 converters/                # Moduł konwerterów
+├── 📁 converters/                # Converters module
 │   ├── __init__.py
-│   ├── base_converter.py        # Klasa bazowa
-│   ├── pdf_converter.py         # Konwerter PDF
-│   ├── docx_converter.py        # Konwerter DOCX
-│   └── image_converter.py       # Konwerter obrazów
+│   ├── base_converter.py        # Base class
+│   ├── pdf_converter.py         # PDF converter
+│   ├── docx_converter.py        # DOCX converter
+│   └── image_converter.py       # Image converter
 │
-├── 📁 tests/                     # Testy
+├── 📁 tests/                     # Tests
 │   ├── __init__.py
-│   └── test_converters.py       # Testy konwerterów
+│   └── test_converters.py       # Converter tests
 │
-├── 📁 output/                    # Domyślny katalog na markdown'y (generowany)
+├── 📁 output/                    # Default output directory for markdowns (generated)
 │
-├── 📄 requirements.txt           # Zależności Python
-├── 📄 setup.py                   # Setup dla instalacji pakietu
+├── 📄 requirements.txt           # Python dependencies
+├── 📄 setup.py                   # Setup for package installation
 │
-├── 📖 README.md                  # Główna dokumentacja
-├── 📖 QUICKSTART.md             # Szybki start (ten plik)
-├── 📖 CONTRIBUTING.md           # Przewodnik dla współtwórców
-├── 📖 CHANGELOG.md              # Historia zmian
-├── 📄 LICENSE                   # Licencja MIT
-└── 📄 .gitignore                # Reguły dla git
+├── 📖 README.md                  # Main documentation
+├── 📖 QUICKSTART.md             # Quick start
+├── 📖 CONTRIBUTING.md           # Contributor guide
+├── 📖 CHANGELOG.md              # Changelog
+├── 📄 LICENSE                   # MIT License
+└── 📄 .gitignore                # Git ignore rules
 ```
 
-## 🚀 Szybki Start (3 kroki)
+## 🚀 Quick Start (3 steps)
 
-### 1. Instalacja
+### 1. Installation
 ```bash
 cd python-transform
 pip install -r requirements.txt
 ```
 
-### 2. Konwersja
+### 2. Conversion
 ```bash
-# Pojedynczy plik
-python main.py dokument.pdf
+# Single file
+python main.py document.pdf
 
-# Katalog
-python main.py ./dokumenty -d
+# Directory
+python main.py ./documents -d
 
-# Z OCR
-python main.py ./obrazy -d --ocr
+# With OCR
+python main.py ./images -d --ocr
 ```
 
 ### 3. Output
 ```
 ./output/
-├── dokument.md
-├── inne_dokumenty.md
+├── document.md
+├── other_documents.md
 └── ...
 ```
 
-## 📋 Obsługiwane formaty
+## 📋 Supported formats
 
-| Format | Rozszerzenie | Obsługa |
+| Format | Extension | Support |
 |--------|------------|---------|
-| PDF | .pdf | ✅ Tekst, tabele |
-| Word | .docx | ✅ Tekst, formatowanie |
-| Obrazy | .png, .jpg | ✅ + OCR opcjonalnie |
+| PDF | .pdf | ✅ Text, tables |
+| Word | .docx | ✅ Text, formatting |
+| Images | .png, .jpg | ✅ + OCR optionally |
 
-## 🔧 Opcje wiersza poleceń
+## 🔧 Command-line options
 
 ```bash
 python main.py -h
 
-Pozycyjne argumenty:
-  input                Plik lub katalog do konwersji
+Positional arguments:
+  input                File or directory to convert
 
-Argumenty opcjonalne:
-  -o, --output OUT     Katalog wyjściowy (domyślnie: ./output)
-  -d, --directory      Tryb katalogowy
-  -r, --recursive      Szukaj rekursywnie
-  --ocr                Użyj OCR dla obrazów
+Optional arguments:
+  -o, --output OUT     Output directory (default: ./output)
+  -d, --directory      Directory mode
+  -r, --recursive      Search recursively
+  --ocr                Use OCR for images
 ```
 
-## 📦 Kluczowe komponenty
+## 📦 Key components
 
 ### main.py
-Główna klasa `DocumentConverter` obsługująca:
-- Konwersję plików
-- Konwersję katalogów
-- Mapowanie typów plików na konwertery
-- Obsługa błędów i logowanie
+Main `DocumentConverter` class handling:
+- File conversion
+- Directory conversion
+- File type to converter mapping
+- Error handling and logging
 
 ### converters/
-- **base_converter.py** - Abstrakcyjna klasa bazowa
-- **pdf_converter.py** - Ekstrakcja tekstu i tabel z PDF
-- **docx_converter.py** - Konwersja z zachowaniem formatowania
-- **image_converter.py** - Konwersja obrazów z opcjonalnym OCR
+- **base_converter.py** - Abstract base class
+- **pdf_converter.py** - Text and table extraction from PDF
+- **docx_converter.py** - Conversion with formatting preservation
+- **image_converter.py** - Image conversion with optional OCR
 
 ### utils.py
-Funkcje pomocnicze:
-- `is_supported()` - Sprawdzenie obsługiwaności formatu
-- `get_supported_files()` - Lista obsługiwanych plików
-- `format_file_size()` - Formatowanie rozmiaru
-- `print_conversion_summary()` - Podsumowanie
+Helper functions:
+- `is_supported()` - Format support check
+- `get_supported_files()` - List supported files
+- `format_file_size()` - File size formatting
+- `print_conversion_summary()` - Summary output
 
-## 🎯 Przykłady użycia
+## 🎯 Usage examples
 
-### Konwersja raportu PDF
+### Convert PDF report
 ```bash
-python main.py raport_Q1_2024.pdf -o ./raporty_md
+python main.py report_Q1_2024.pdf -o ./reports_md
 ```
-Output: `./raporty_md/raport_Q1_2024.md`
+Output: `./reports_md/report_Q1_2024.md`
 
-### Konwersja całego projektu
+### Convert entire project
 ```bash
-python main.py ./projekt -d -r -o ./projekt_markdown
+python main.py ./project -d -r -o ./project_markdown
 ```
-Konwertuje wszystkie pliki rekursywnie
+Converts all files recursively
 
-### Ekstrakcja tekstu z skanów
+### Extract text from scans
 ```bash
-python main.py ./przeskanowane_dokumenty -d --ocr -o ./tekst
+python main.py ./scanned_documents -d --ocr -o ./text
 ```
-Wymaga: Tesseract-OCR
+Requires: Tesseract-OCR
 
-## 🧪 Testy
+## 🧪 Tests
 
 ```bash
-# Uruchom testy
+# Run tests
 python -m pytest tests/
 
-# Inne polecenia
+# Other commands
 python -m pytest tests/test_converters.py -v
 python -m pytest tests/test_converters.py::TestPDFConverter -v
 ```
 
-## 📝 Konfig (config.py)
+## 📝 Configuration (config.py)
 
 ```python
 from config import get_config
 
-# Pre-built konfiguracje
-config = get_config('default')   # Domyślna
-config = get_config('fast')      # Szybka
-config = get_config('full')      # Pełna z OCR
+# Pre-built configurations
+config = get_config('default')   # Default
+config = get_config('fast')      # Fast
+config = get_config('full')      # Full with OCR
 ```
 
-## 🔗 Zależności
+## 🔗 Dependencies
 
-- `PyPDF2` 3.0.1 - Przetwarzanie PDF
-- `pdfplumber` 0.9.0 - Ekstrakcja tabel
-- `python-docx` 0.8.11 - Przetwarzanie DOCX
-- `Pillow` 10.0.0 - Przetwarzanie obrazów
+- `PyPDF2` 3.0.1 - PDF processing
+- `pdfplumber` 0.9.0 - Table extraction
+- `python-docx` 0.8.11 - DOCX processing
+- `Pillow` 11.0.0+ - Image processing
 - `pytesseract` 0.3.10 - OCR
-- `markdown` 3.5.0 - Obsługa Markdown
+- `markdown` 3.5.0 - Markdown support
 
-## 🐛 Rozwiązywanie problemów
+## 🐛 Troubleshooting
 
-### Błąd: "ModuleNotFoundError"
+### Error: "ModuleNotFoundError"
 ```bash
 pip install -r requirements.txt --upgrade
 ```
 
-### OCR nie działa
-- Zainstaluj Tesseract-OCR
-- Ustaw ścieżkę w kodzie
+### OCR not working
+- Install Tesseract-OCR
+- Set path in code
 
 ### Out of Memory
-- Konwertuj mniejsze partie
-- Zmniejsz rozmiar obrazów
+- Convert smaller batches
+- Reduce image sizes
 
-## 📚 Dokumentacja
+## 📚 Documentation
 
-- [README.md](README.md) - Pełna dokumentacja
-- [QUICKSTART.md](QUICKSTART.md) - Szybki start
-- [examples.py](examples.py) - Przykłady kodu
-- [CONTRIBUTING.md](CONTRIBUTING.md) - Dla developerów
+- [README.md](README.md) - Full documentation
+- [QUICKSTART.md](QUICKSTART.md) - Quick start
+- [examples.py](examples.py) - Code examples
+- [CONTRIBUTING.md](CONTRIBUTING.md) - For developers
 
 ## 🚢 Deployment
 
-### Jako skrypt
+### As script
 ```bash
 python main.py input.pdf
 ```
 
-### Jako moduł
+### As module
 ```bash
 pip install -e .
 python-transform input.pdf
@@ -198,15 +198,15 @@ python-transform input.pdf
 python setup.py install
 ```
 
-## 📝 Licencja
+## 📝 License
 
-MIT - Patrz [LICENSE](LICENSE)
+MIT - See [LICENSE](LICENSE)
 
-## 🤝 Wkład
+## 🤝 Contribution
 
-Zainteresowany w udziale? Przeczytaj [CONTRIBUTING.md](CONTRIBUTING.md)
+Interested in contributing? Read [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ---
 
-**Ostatnia aktualizacja:** 2024-04-07
+**Last Updated:** 2024-04-07
 **Status:** v0.1.0 (Alpha)

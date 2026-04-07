@@ -1,5 +1,5 @@
 """
-Klasa bazowa dla wszystkich konwerterów.
+Base class for all converters.
 """
 
 from abc import ABC, abstractmethod
@@ -7,28 +7,28 @@ from typing import Optional
 
 
 class BaseConverter(ABC):
-    """Abstrakcyjna klasa bazowa dla konwerterów."""
+    """Abstract base class for converters."""
     
     @abstractmethod
     def convert(self, file_path: str, **kwargs) -> Optional[str]:
         """
-        Konwertuje plik na Markdown.
+        Convert file to Markdown.
         
         Args:
-            file_path: Ścieżka do pliku wejściowego
-            **kwargs: Dodatkowe parametry specyficzne dla konwertera
+            file_path: Path to the input file
+            **kwargs: Additional parameters specific to the converter
             
         Returns:
-            Zawartość Markdown lub None
+            Markdown content or None
         """
         pass
     
     def _create_markdown_header(self, title: str, level: int = 1) -> str:
-        """Tworzy nagłówek Markdown."""
+        """Create a Markdown header."""
         return f"{'#' * level} {title}\n\n"
     
     def _escape_markdown(self, text: str) -> str:
-        """Escapeuje znaki specjalne Markdown."""
+        """Escape special Markdown characters."""
         special_chars = ['\\', '`', '*', '_', '{', '}', '[', ']', '(', ')', '#', '+', '-', '.', '!']
         for char in special_chars:
             text = text.replace(char, f'\\{char}')

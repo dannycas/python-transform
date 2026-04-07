@@ -1,45 +1,45 @@
 # Document & Image to Markdown Converter
 
-Skrypt do konwersji dokumentów (PDF, DOCX) i obrazów (PNG, JPG, itd.) na pliki Markdown.
+Script for converting documents (PDF, DOCX) and images (PNG, JPG, etc.) to Markdown files.
 
 ## Features
 
-- ✅ **Konwersja PDF** - Ekstrakcja tekstu i tabel z plików PDF
-- ✅ **Konwersja DOCX** - Obsługa formatowania, nagłówków, tabel
-- ✅ **Konwersja obrazów** - PNG, JPG, BMP, GIF, TIFF, WebP
-- ✅ **OCR dla obrazów** - Opcjonalna ekstrakcja tekstu z obrazów
-- ✅ **Konwersja wsadowa** - Przetwarzanie całych katalogów
-- ✅ **Rekursywna konwersja** - Obsługa podkatalogów
+- ✅ **PDF Conversion** - Extract text and tables from PDF files
+- ✅ **DOCX Conversion** - Support for formatting, headers, tables
+- ✅ **Image Conversion** - PNG, JPG, BMP, GIF, TIFF, WebP
+- ✅ **OCR for images** - Optional text extraction from images
+- ✅ **Batch Conversion** - Process entire directories
+- ✅ **Recursive Conversion** - Support for subdirectories
 
-## Wymagania
+## Requirements
 
 - Python 3.8+
-- Biblioteki Python (patrz `requirements.txt`)
-- (Opcjonalnie) Tesseract-OCR dla funkcji OCR obrazów
+- Python Libraries (see `requirements.txt`)
+- (Optional) Tesseract-OCR for image OCR functionality
 
-## Instalacja
+## Installation
 
-### 1. Klonuj repozytorium
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/yourusername/python-transform.git
 cd python-transform
 ```
 
-### 2. Zainstaluj zależności Python
+### 2. Install Python dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. (Opcjonalnie) Zainstaluj Tesseract-OCR
+### 3. (Optional) Install Tesseract-OCR
 
 #### Windows
 
-Pobierz instalator z: https://github.com/UB-Mannheim/tesseract/wiki
+Download installer from: https://github.com/UB-Mannheim/tesseract/wiki
 
 ```bash
-# Po instalacji, ustaw zmienną środowiska w kodzie lub w Pythonie
+# After installation, set environment variable in code or Python
 import pytesseract
 pytesseract.pytesseract.pytesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 ```
@@ -48,193 +48,193 @@ pytesseract.pytesseract.pytesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesse
 
 ```bash
 sudo apt-get install tesseract-ocr
-sudo apt-get install tesseract-ocr-pol  # Dla polskiego
+sudo apt-get install tesseract-ocr-pol  # For Polish
 ```
 
 #### macOS
 
 ```bash
 brew install tesseract
-brew install tesseract-lang  # Dla dodatkowych języków
+brew install tesseract-lang  # For additional languages
 ```
 
-## 🧪 Testy
+## 🧪 Tests
 
-Projekt zawiera kompleksową suite testów:
+The project contains a comprehensive test suite:
 
 ```bash
-# Uruchom wszystkie testy (69 testów)
+# Run all tests (69 tests)
 python run_tests.py
 
-# Tylko unit testy
+# Unit tests only
 python run_tests.py -u
 
-# Tylko integration testy
+# Integration tests only
 python run_tests.py -i
 
-# Z pokryciem kodu
+# With code coverage
 pytest --cov=converters --cov=main --cov=utils --cov-report=html
 ```
 
 **Test Statistics:**
-- 📊 69 testów (44 unit + 25 integration)
-- 📈 ~91% pokrycie kodu
-- ✅ Wszystkie formaty obsługiwane
+- 📊 69 tests (44 unit + 25 integration)
+- 📈 ~91% code coverage
+- ✅ All formats supported
 
-Więcej w [TESTING.md](TESTING.md) oraz [TESTS_QUICK_REFERENCE.md](TESTS_QUICK_REFERENCE.md)
+More in [TESTING.md](TESTING.md) and [TESTS_QUICK_REFERENCE.md](TESTS_QUICK_REFERENCE.md)
 
-## Użycie
+## Usage
 
-### Konwersja pojedynczego pliku
+### Convert a single file
 
 ```bash
 python main.py input.pdf
 ```
 
-Plik Markdown będzie utworzony w katalogu `./output/`
+Markdown file will be created in the `./output/` directory
 
-### Konwersja z określeniem katalogu wyjściowego
+### Convert with specific output directory
 
 ```bash
 python main.py input.pdf -o ./moje_markdown_pliki
 ```
 
-### Konwersja całego katalogu
+### Convert entire directory
 
 ```bash
-python main.py ./dokumenty -d
+python main.py ./documents -d
 ```
 
-Konwertuje wszystkie obsługiwane pliki w katalogu `./dokumenty`
+Convert all supported files in the directory `./documents`
 
-### Konwersja rekursywna (z podkatalogami)
+### Recursive conversion (with subdirectories)
 
 ```bash
-python main.py ./dokumenty -d -r
+python main.py ./documents -d -r
 ```
 
-### Konwersja z OCR dla obrazów
+### Conversion with OCR for images
 
 ```bash
-python main.py ./obrazy -d --ocr
+python main.py ./images -d --ocr
 ```
 
-Ekstrakcja tekstu z obrazów (wymaga Tesseract-OCR)
+Extract text from images (requires Tesseract-OCR)
 
-### Pełna pomoc
+### Full help
 
 ```bash
 python main.py -h
 ```
 
-## Obsługiwane formaty
+## Supported formats
 
-| Format | Rozszerzenie | Obsługa |
+| Format | Extension | Support |
 |--------|-------------|---------|
-| PDF | `.pdf` | ✅ Tekst, tabele |
-| Word | `.docx`, `.doc` | ✅ Tekst, formatowanie, tabele |
-| PNG | `.png` | ✅ Metadane, OCR |
-| JPEG | `.jpg`, `.jpeg` | ✅ Metadane, OCR |
-| BMP | `.bmp` | ✅ Metadane, OCR |
-| GIF | `.gif` | ✅ Metadane, OCR |
-| TIFF | `.tiff` | ✅ Metadane, OCR |
-| WebP | `.webp` | ✅ Metadane, OCR |
+| PDF | `.pdf` | ✅ Text, tables |
+| Word | `.docx`, `.doc` | ✅ Text, formatting, tables |
+| PNG | `.png` | ✅ Metadata, OCR |
+| JPEG | `.jpg`, `.jpeg` | ✅ Metadata, OCR |
+| BMP | `.bmp` | ✅ Metadata, OCR |
+| GIF | `.gif` | ✅ Metadata, OCR |
+| TIFF | `.tiff` | ✅ Metadata, OCR |
+| WebP | `.webp` | ✅ Metadata, OCR |
 
-## Przykłady
+## Examples
 
-### Przykład 1: Konwersja raportu PDF
-
-```bash
-python main.py raport_2024.pdf -o ./raporty_markdown
-```
-
-Rezultat: `./raporty_markdown/raport_2024.md`
-
-### Przykład 2: Konwersja dokumentu Word z formatowaniem
+### Example 1: Convert PDF report
 
 ```bash
-python main.py instrukcja.docx -o ./dokumentacja
+python main.py report_2024.pdf -o ./reports_markdown
 ```
 
-Rezultat: Markdown z zachowanym formatowaniem (nagłówkami, tabelami, itp.)
+Result: `./reports_markdown/report_2024.md`
 
-### Przykład 3: Ekstrakcja tekstu z wielu obrazów
+### Example 2: Convert Word document with formatting
 
 ```bash
-python main.py ./przeskanowane_dokumenty -d -r --ocr -o ./tekst_z_skanow
+python main.py instructions.docx -o ./docs
 ```
 
-Konwertuje wszystkie obrazy w katalogu rekursywnie, ekstrakcja tekstu za pomocą OCR
+Result: Markdown with preserved formatting (headers, tables, etc.)
 
-### Przykład 4: Konwersja projektu ze źródłami
+### Example 3: Extract text from multiple images
 
 ```bash
-python main.py ./projekt -d -r -o ./markdown_wersja
+python main.py ./scanned_documents -d -r --ocr -o ./text_from_scans
 ```
 
-Konwertuje wszystkie obsługiwane pliki w całym projekcie
+Converts all images in directory recursively, extract text via OCR
 
-## Struktura projektu
+### Example 4: Convert entire project
+
+```bash
+python main.py ./project -d -r -o ./project_markdown
+```
+
+Converts all supported files in entire project
+
+## Project structure
 
 ```
 python-transform/
-├── main.py                 # Główny skrypt
-├── requirements.txt        # Zależności Python
-├── README.md              # Dokumentacja (ten plik)
+├── main.py                 # Main script
+├── requirements.txt        # Python dependencies
+├── README.md              # Documentation (this file)
 ├── converters/
 │   ├── __init__.py
-│   ├── base_converter.py  # Klasa bazowa
-│   ├── pdf_converter.py   # Konwerter PDF
-│   ├── docx_converter.py  # Konwerter DOCX
-│   └── image_converter.py # Konwerter obrazów
-└── output/                # Domyślny katalog wyjściowy
+│   ├── base_converter.py  # Base class
+│   ├── pdf_converter.py   # PDF converter
+│   ├── docx_converter.py  # DOCX converter
+│   └── image_converter.py # Image converter
+└── output/                # Default output directory
 ```
 
-## Parametry konwertowania
+## Converter parameters
 
-### Ogólne
+### General
 
-- `input` - Plik lub katalog do konwersji (wymagane)
-- `-o, --output` - Katalog wyjściowy (domyślnie: `./output`)
-- `-d, --directory` - Tryb katalogowy
-- `-r, --recursive` - Szukaj rekursywnie
+- `input` - File or directory to convert (required)
+- `-o, --output` - Output directory (default: `./output`)
+- `-d, --directory` - Directory mode
+- `-r, --recursive` - Search recursively
 
-### Specyficzne dla obrazów
+### Specific for images
 
-- `--ocr` - Użyj OCR do ekstrakcji tekstu z obrazów
+- `--ocr` - Use OCR to extract text from images
 
-## Uwagi i tips
+## Notes and tips
 
 ### OCR
 
-- OCR wymaga dodatkowe czasu na przetwarzanie
-- Dla lepszych rezultatów OCR, upewnij się, że obrazy mają dobrej jakości tekst
-- Obsługiwane języki: angielski (domyślnie), polski (jeśli zainstalowany)
+- OCR requires additional processing time
+- For better OCR results, ensure images have good quality text
+- Supported languages: English (default), Polish (if installed)
 
-### Wydajność
+### Performance
 
-- Konwersja dużych plików PDF może trwać dłużej
-- Dla dużych zbiorów obrazów, użyj konwersji rekursywnej
+- Converting large PDF files may take longer
+- For large image collections, use recursive conversion
 
-### Limity
+### Limits
 
-- Bardzo duże PDF (>100MB) mogą wymagać więcej pamięci RAM
-- Obrazy o niskiej jakości mogą dać słabe resultat OCR
+- Very large PDFs (>100MB) may require more RAM
+- Low quality images may give poor OCR results
 
-## Rozwiązywanie problemów
+## Troubleshooting
 
 ### Problem: "ModuleNotFoundError: No module named 'docx'"
 
-**Rozwiązanie:**
+**Solution:**
 ```bash
 pip install python-docx
 ```
 
 ### Problem: "Tesseract is not installed or it's not in your PATH"
 
-**Rozwiązanie Windows:**
-1. Pobierz i zainstaluj Tesseract z: https://github.com/UB-Mannheim/tesseract/wiki
-2. Ustaw ścieżkę w kodzie:
+**Solution for Windows:**
+1. Download and install Tesseract from: https://github.com/UB-Mannheim/tesseract/wiki
+2. Set the path in the code:
 ```python
 import pytesseract
 pytesseract.pytesseract.pytesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
@@ -242,17 +242,17 @@ pytesseract.pytesseract.pytesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesse
 
 ### Problem: "No module named 'converters'"
 
-**Rozwiązanie:**
+**Solution:**
 ```bash
-# Uruchom z głównego katalogu projektu
+# Run from the main project directory
 python main.py input.pdf
 ```
 
-## Rozszerzanie
+## Extending
 
-Aby dodać obsługę nowego formatu:
+To add support for a new format:
 
-1. Utwórz nowy konwerter dziedziczący z `BaseConverter`:
+1. Create a new converter inheriting from `BaseConverter`:
 
 ```python
 # converters/csv_converter.py
@@ -260,11 +260,11 @@ from .base_converter import BaseConverter
 
 class CSVConverter(BaseConverter):
     def convert(self, file_path: str, **kwargs) -> Optional[str]:
-        # Implementacja konwersji
+        # Conversion implementation
         pass
 ```
 
-2. Dodaj do `main.py`:
+2. Add to `main.py`:
 
 ```python
 from converters.csv_converter import CSVConverter
@@ -275,14 +275,14 @@ CONVERTERS = {
 }
 ```
 
-## Licencja
+## License
 
 MIT
 
-## Autor
+## Author
 
 Python Transform Project
 
-## Kontakt i wsparcie
+## Contact and Support
 
-Aby zgłosić błędy lub zaproponować funkcje, utwórz issue w repozytorium.
+To report bugs or suggest features, create an issue in the repository.

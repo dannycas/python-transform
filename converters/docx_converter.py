@@ -1,5 +1,5 @@
 """
-Konwerter DOCX na Markdown.
+DOCX to Markdown converter.
 """
 
 import logging
@@ -15,23 +15,23 @@ logger = logging.getLogger(__name__)
 
 
 class DOCXConverter(BaseConverter):
-    """Konwertuje pliki DOCX na Markdown."""
+    """Convert DOCX files to Markdown."""
     
     def convert(self, file_path: str, **kwargs) -> Optional[str]:
         """
-        Konwertuje DOCX na Markdown.
+        Convert DOCX to Markdown.
         
         Args:
-            file_path: Ścieżka do pliku DOCX
+            file_path: Path to the DOCX file
             
         Returns:
-            Zawartość Markdown
+            Markdown content
         """
         try:
             doc = Document(file_path)
             markdown_content = []
             
-            # Przetwórz każdy element dokumentu
+            # Process all document elements
             for element in doc.element.body:
                 if isinstance(element, CT_P):
                     paragraph = Paragraph(element, doc.element.body)
@@ -49,19 +49,19 @@ class DOCXConverter(BaseConverter):
             return ''.join(markdown_content)
             
         except Exception as e:
-            logger.error(f"Błąd konwersji DOCX: {e}")
+            logger.error(f"DOCX conversion error: {e}")
             return None
     
     def _process_paragraph(self, paragraph: Paragraph) -> str:
-        """Przetwórz paragraf z formatowaniem."""
+        """Process paragraph with formatting."""
         if not paragraph.text.strip():
             return ""
         
-        # Określ poziom nagłówka na podstawie stylu
+        # Determine header level based on style
         style = paragraph.style.name
         level = self._get_header_level(style)
         
-        # Przetwórz tekst z formatowaniem
+        # Process text with formatting
         text_parts = []
         for run in paragraph.runs:
             if run.text.strip():
@@ -73,14 +73,14 @@ class DOCXConverter(BaseConverter):
         if level > 0:
             return f"{'#' * level} {text}\n\n"
         elif paragraph.style.name.startswith('List'):
-            # Lista punktowana
+            # Bullet list
             indent = len(paragraph.paragraph_format.left_indent or 0) // 100
             return f"{'  ' * indent}* {text}\n"
         else:
             return f"{text}\n\n"
     
     def _get_header_level(self, style_name: str) -> int:
-        """Określ poziom nagłówka na podstawie nazwy stylu."""
+        """Determine header level based on style name."""
         style_name_lower = style_name.lower()
         
         if 'heading 1' in style_name_lower:
@@ -99,7 +99,7 @@ class DOCXConverter(BaseConverter):
         return 0
     
     def _format_run(self, run) -> str:
-        """Sformatuj tekst bieżący na podstawie właściwości."""
+        """Format current text based on properties."""
         text = run.text
         
         if run.bold:
@@ -114,19 +114,19 @@ class DOCXConverter(BaseConverter):
         return text
     
     def _table_to_markdown(self, table: Table) -> str:
-        """Konwertuje tabelę DOCX na format Markdown."""
+        """Convert DOCX table to Markdown format."""
         lines = []
         
         for row_idx, row in enumerate(table.rows):
             cells = []
             for cell in row.cells:
-                # Ekstrakcja tekstu z komórki
+                # Extract text from cell
                 cell_text = ' '.join([p.text for p in cell.paragraphs]).strip()
                 cells.append(cell_text)
             
             lines.append("| " + " | ".join(cells) + " |")
             
-            # Dodaj separator po nagłówku
+            # Add separator after header
             if row_idx == 0:
                 separator = "|" + "|".join(["---"] * len(cells)) + "|"
                 lines.append(separator)

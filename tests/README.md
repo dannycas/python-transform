@@ -1,18 +1,18 @@
 # Tests Directory
 
-Katalog zawierający wszystkie testy dla projektu python-transform.
+Directory containing all tests for the python-transform project.
 
-## Struktura
+## Structure
 
 ```
 tests/
 ├── __init__.py                  # Package marker
-├── test_converters.py           # Unit testy (44 testy)
-├── test_integration.py          # Integration testy (25 testów)
-└── README.md                    # Ten plik
+├── test_converters.py           # Unit tests (44 tests)
+├── test_integration.py          # Integration tests (25 tests)
+└── README.md                    # This file
 ```
 
-## Szybki Start
+## Quick Start
 
 ### Run all tests
 ```bash
@@ -34,115 +34,115 @@ python -m unittest discover -s tests -p "test_*.py" -v
 
 ### test_converters.py (44 Unit Tests)
 
-**Testowane komponenty:**
-- BaseConverter (klasa bazowa)
-- PDFConverter (konwersja PDF)
-- DOCXConverter (konwersja DOCX)
-- ImageConverter (konwersja obrazów)
-- Utils functions (funkcje pomocnicze)
+**Tested components:**
+- BaseConverter (base class)
+- PDFConverter (PDF conversion)
+- DOCXConverter (DOCX conversion)
+- ImageConverter (image conversion)
+- Utils functions (helper functions)
 
-**Główne kategorie testów:**
-1. Existance checks (czy komponenty istnieją)
-2. Functionality tests (czy działają jak oczekiwano)
-3. Error handling (obsługa błędów)
-4. Edge cases (przypadki graniczne)
+**Main test categories:**
+1. Existence checks (whether components exist)
+2. Functionality tests (whether they work as expected)
+3. Error handling (error handling)
+4. Edge cases (boundary conditions)
 
 ### test_integration.py (25 Integration Tests)
 
-**Testowane systemy:**
-- DocumentConverter (główna klasa)
+**Tested systems:**
+- DocumentConverter (main class)
 - Utils module (utilities)
-- Configuration (konfiguracja)
-- Converter integration (integracja konwerterów)
+- Configuration (configuration)
+- Converter integration (converter integration)
 
-**Główne kategorie testów:**
-1. System initialization (inicjalizacja)
-2. Format support (obsługa formatów)
-3. File operations (operacje na plikach)
-4. Configuration management (zarządzanie konfiguracją)
+**Main test categories:**
+1. System initialization (initialization)
+2. Format support (format support)
+3. File operations (file operations)
+4. Configuration management (configuration management)
 
 ## Test Coverage
 
-| Moduł | Pokrycie |
-|-------|---------|
+| Module | Coverage |
+|--------|----------|
 | converters/ | ~92% |
 | main.py | ~85% |
 | utils.py | ~90% |
 | config.py | ~95% |
-| **Średnie** | **~91%** |
+| **Average** | **~91%** |
 
-## Wymagania
+## Requirements
 
 - Python 3.8+
-- Biblioteki z requirements.txt
-- (Opcjonalnie) pytest i pytest-cov
+- Libraries from requirements.txt
+- (Optional) pytest and pytest-cov
 
 ```bash
-# Instalacja zależności testowych
+# Install test dependencies
 pip install -r requirements-dev.txt
 ```
 
-## Uruchamianie
+## Running
 
-### Metoda 1: run_tests.py (ZALECANE)
+### Method 1: run_tests.py (RECOMMENDED)
 ```bash
-python run_tests.py              # Wszystkie testy
-python run_tests.py -u           # Unit testy
-python run_tests.py -i           # Integration testy
-python run_tests.py -t TEST_NAME # Konkretny test
+python run_tests.py              # All tests
+python run_tests.py -u           # Unit tests
+python run_tests.py -i           # Integration tests
+python run_tests.py -t TEST_NAME # Specific test
 ```
 
-### Metoda 2: unittest
+### Method 2: unittest
 ```bash
 python -m unittest discover -s tests -p "test_*.py" -v
 python -m unittest tests.test_converters -v
 python -m unittest tests.test_converters.TestPDFConverter -v
 ```
 
-### Metoda 3: pytest
+### Method 3: pytest
 ```bash
 pytest
 pytest tests/test_converters.py -v
 pytest --cov=converters --cov=main --cov=utils --cov-report=html
 ```
 
-## Dokumentacja
+## Documentation
 
-- [TESTING.md](../TESTING.md) - Pełna dokumentacja testów
-- [TEST_SUMMARY.md](../TEST_SUMMARY.md) - Szczegółowe podsumowanie
-- [TESTS_QUICK_REFERENCE.md](../TESTS_QUICK_REFERENCE.md) - Szybka referencja
+- [TESTING.md](../TESTING.md) - Full test documentation
+- [TEST_SUMMARY.md](../TEST_SUMMARY.md) - Detailed summary
+- [TESTS_QUICK_REFERENCE.md](../TESTS_QUICK_REFERENCE.md) - Quick reference
 
-## Notatki
+## Notes
 
-### Działające testy
-- Wszystkie testy jednostkowe przechodzą
-- Testy integracyjne obejmują cały system
-- Mocking jest używany dla externych zależności (Tesseract-OCR)
+### Working tests
+- All unit tests pass
+- Integration tests cover the entire system
+- Mocking is used for external dependencies (Tesseract-OCR)
 
-### Ograniczenia
-- OCR testy są mockowane (wymaga Tesseract-OCR na systemie)
-- Rzeczywiste pliki PDF/DOCX nie są testowane (byłyby zbyt duże)
-- Testy działają bez zainstalowanego Tesseract
+### Limitations
+- OCR tests are mocked (requires Tesseract-OCR on system)
+- Actual PDF/DOCX files are not tested (would be too large)
+- Tests work without Tesseract installed
 
 ## Troubleshooting
 
 ### ImportError: No module named 'converters'
-**Rozwiązanie:**
+**Solution:**
 ```bash
 cd /path/to/python-transform
 python run_tests.py
 ```
 
 ### Tests not found
-**Rozwiązanie:**
+**Solution:**
 ```bash
-# Upewnij się że jesteś w głównym katalogu
-pwd  # Powinno pokazać ...python-transform
+# Make sure you're in the main directory
+pwd  # Should show ...python-transform
 python -m unittest discover -s tests -p "test_*.py" -v
 ```
 
 ### pytest not found
-**Rozwiązanie:**
+**Solution:**
 ```bash
 pip install pytest
 pytest
@@ -150,29 +150,29 @@ pytest
 
 ## Contributing
 
-Dodając nowe testy:
+Adding new tests:
 
-1. Utwórz test w odpowiednim pliku
-   - Unit testy → `test_converters.py`
-   - Integration testy → `test_integration.py`
+1. Create test in appropriate file
+   - Unit tests → `test_converters.py`
+   - Integration tests → `test_integration.py`
 
-2. Następuj konwencję nazewnictwa
+2. Follow naming convention
    ```python
    def test_descriptive_name(self):
-       """Opis co test sprawdza."""
+       """Description of what test checks."""
    ```
 
-3. Uwzględnij docstring
+3. Include docstring
 
-4. Uruchom testy
+4. Run tests
    ```bash
    python run_tests.py
    ```
 
-5. Commit ze zmienionym pokryciem
+5. Commit with changed coverage
 
 ## Status
 
-✅ **69 testów**
-✅ **~91% pokrycia kodu**
-✅ **Gotowe do CI/CD**
+✅ **69 tests**
+✅ **~91% code coverage**
+✅ **Ready for CI/CD**

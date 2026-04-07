@@ -1,268 +1,268 @@
-# Dokumentacja Testów dla python-transform
+# Test Documentation for python-transform
 
-## Przegląd
+## Overview
 
-Projekt python-transform ma kompleksową suite testów obejmującą:
+The python-transform project has a comprehensive test suite including:
 
-- **Unit testy** (testy konwerterów)
-- **Testy integracyjne** (testy systemu jako całości)
-- **Coverage reporting** (raport pokrycia kodu)
+- **Unit tests** (converter tests)
+- **Integration tests** (system-level tests)
+- **Coverage reporting** (code coverage report)
 
-## Struktura testów
+## Test structure
 
 ```
 tests/
 ├── __init__.py
-├── test_converters.py         # Unit testy
-└── test_integration.py        # Testy integracyjne
+├── test_converters.py         # Unit tests
+└── test_integration.py        # Integration tests
 ```
 
-## Uruchamianie testów
+## Running tests
 
-### Metoda 1: Używając run_tests.py
+### Method 1: Using run_tests.py
 
 ```bash
-# Wszystkie testy
+# All tests
 python run_tests.py
 
-# Tylko unit testy
+# Unit tests only
 python run_tests.py -u
 
-# Tylko testy integracyjne
+# Integration tests only
 python run_tests.py -i
 
-# Konkretny test
+# Specific test
 python run_tests.py -t tests.test_converters.TestPDFConverter
 
-# Kontrola verbosity
+# Verbosity control
 python run_tests.py -v 1  # Minimum
 python run_tests.py -v 2  # Maximum
 ```
 
-### Metoda 2: Używając unittest (Python)
+### Method 2: Using unittest (Python)
 
 ```bash
-# Wszystkie testy
+# All tests
 python -m unittest discover -s tests -p "test_*.py"
 
-# Konkretny plik testów
+# Specific test file
 python -m unittest tests.test_converters
 
-# Konkretna klasa testów
+# Specific test class
 python -m unittest tests.test_converters.TestPDFConverter
 
-# Konkretny test
+# Specific test
 python -m unittest tests.test_converters.TestPDFConverter.test_converter_exists
 ```
 
-### Metoda 3: Używając pytest (jeśli zainstalowany)
+### Method 3: Using pytest (if installed)
 
 ```bash
-# Instalacja
+# Installation
 pip install pytest pytest-cov
 
-# Wszystkie testy z raportem
+# All tests with report
 pytest
 
-# Testy z pokryciem kodu
+# Tests with code coverage
 pytest --cov=converters --cov=main --cov=utils --cov-report=html
 
 # Verbose
 pytest -v
 
-# Konkretny plik
+# Specific file
 pytest tests/test_converters.py -v
 
-# Konkretna klasa
+# Specific class
 pytest tests/test_converters.py::TestPDFConverter -v
 
-# Konkretny test
+# Specific test
 pytest tests/test_converters.py::TestPDFConverter::test_converter_exists -v
 ```
 
-## Unit testy (test_converters.py)
+## Unit tests (test_converters.py)
 
-### Klasy testowe:
+### Test classes:
 
 #### 1. TestBaseConverter
-Testy dla klasy bazowej `BaseConverter`:
-- `test_converter_exists` - Sprawdzenie istnienia konwertera
-- `test_create_markdown_header_level_*` - Tworzenie nagłówków MD
-- `test_escape_markdown` - Escapeowanie znaków specjalnych
+Tests for the `BaseConverter` class:
+- `test_converter_exists` - Check converter existence
+- `test_create_markdown_header_level_*` - Create MD headers
+- `test_escape_markdown` - Escape special characters
 
 #### 2. TestPDFConverter
-Testy dla klasy `PDFConverter`:
-- `test_converter_exists` - Konwerter istnieje
-- `test_converter_is_base_converter` - Dziedziczenie
-- `test_table_to_markdown_*` - Konwersja tabel
-- `test_convert_nonexistent_file` - Obsługa błędów
+Tests for the `PDFConverter` class:
+- `test_converter_exists` - Converter exists
+- `test_converter_is_base_converter` - Inheritance
+- `test_table_to_markdown_*` - Table conversion
+- `test_convert_nonexistent_file` - Error handling
 
 #### 3. TestDOCXConverter
-Testy dla klasy `DOCXConverter`:
-- `test_get_header_level_*` - Poziomy nagłówków
-- `test_format_run_*` - Formatowanie tekstu (bold, italic)
-- `test_table_to_markdown` - Konwersja tabel
-- `test_convert_nonexistent_file` - Obsługa błędów
+Tests for the `DOCXConverter` class:
+- `test_get_header_level_*` - Header levels
+- `test_format_run_*` - Text formatting (bold, italic)
+- `test_table_to_markdown` - Table conversion
+- `test_convert_nonexistent_file` - Error handling
 
 #### 4. TestImageConverter
-Testy dla klasy `ImageConverter`:
-- `test_get_mime_type_*` - MIME types dla formatów
-- `test_convert_nonexistent_image` - Obsługa błędów
+Tests for the `ImageConverter` class:
+- `test_get_mime_type_*` - MIME types for formats
+- `test_convert_nonexistent_image` - Error handling
 
 #### 5. TestUtilsFunctions
-Testy dla funkcji z `utils.py`:
-- `test_is_supported_*` - Sprawdzanie obsługiwaności formatów
-- `test_is_not_supported_*` - Nieobsługiwane formaty
+Tests for functions in `utils.py`:
+- `test_is_supported_*` - Format support check
+- `test_is_not_supported_*` - Unsupported formats
 
-## Testy integracyjne (test_integration.py)
+## Integration tests (test_integration.py)
 
-### Klasy testowe:
+### Test classes:
 
 #### 1. TestDocumentConverter
-Testy dla głównej klasy `DocumentConverter`:
-- `test_converter_initialization` - Inicjalizacja
-- `test_converter_has_supported_formats` - Formaty obsługiwane
-- `test_pdf_in_supported_formats` - PDF obsługiwany
-- `test_*_in_supported_formats` - Inne formaty
+Tests for the main `DocumentConverter` class:
+- `test_converter_initialization` - Initialization
+- `test_converter_has_supported_formats` - Supported formats
+- `test_pdf_in_supported_formats` - PDF supported
+- `test_*_in_supported_formats` - Other formats
 
 #### 2. TestUtilsIntegration
-Testy integracyjne dla utils:
-- `test_get_supported_extensions` - Lista rozszerzeń
+Integration tests for utils:
+- `test_get_supported_extensions` - Extension list
 - `test_is_supported_case_insensitive` - Case-insensitivity
-- `test_ensure_output_dir` - Tworzenie katalogów
-- `test_format_file_size` - Formatowanie rozmiaru
-- `test_get_supported_files_*` - Filtrowanie plików
+- `test_ensure_output_dir` - Directory creation
+- `test_format_file_size` - File size formatting
+- `test_get_supported_files_*` - File filtering
 
 #### 3. TestConverterIntegration
-Testy integracyjne konwerterów:
-- `test_all_converters_exist` - Import konwerterów
-- `test_converters_are_subclasses_of_base` - Dziedziczenie
-- `test_converters_have_convert_method` - Metody konwersji
+Converter integration tests:
+- `test_all_converters_exist` - Import converters
+- `test_converters_are_subclasses_of_base` - Inheritance
+- `test_converters_have_convert_method` - Convert methods
 
 #### 4. TestConfigurationModule
-Testy dla `config.py`:
-- `test_config_import` - Import modułu
-- `test_config_default/fast/full` - Różne konfiguracje
+Tests for `config.py`:
+- `test_config_import` - Module import
+- `test_config_default/fast/full` - Different configurations
 
-## Przypadki testowe (Test Cases)
+## Test cases
 
 ### PDF Converter
 
-| Test | Cel |
-|------|-----|
-| `test_converter_exists` | ✓ Konwerter istnieje |
-| `test_table_to_markdown_basic` | ✓ Konwersja prostych tabel |
-| `test_table_to_markdown_with_none_values` | ✓ Obsługa None w tabelach |
-| `test_table_to_markdown_empty_table` | ✓ Puste tabele |
-| `test_table_to_markdown_single_row` | ✓ Tabela z jednym wierszem |
-| `test_convert_nonexistent_file` | ✓ Nieistniejące pliki |
+| Test | Purpose |
+|------|---------|
+| `test_converter_exists` | ✓ Converter exists |
+| `test_table_to_markdown_basic` | ✓ Simple table conversion |
+| `test_table_to_markdown_with_none_values` | ✓ Support None in tables |
+| `test_table_to_markdown_empty_table` | ✓ Empty tables |
+| `test_table_to_markdown_single_row` | ✓ Single-row table |
+| `test_convert_nonexistent_file` | ✓ Nonexistent files |
 
 ### DOCX Converter
 
-| Test | Cel |
-|------|-----|
-| `test_converter_exists` | ✓ Konwerter istnieje |
-| `test_get_header_level_*` | ✓ Poziomy nagłówków (1-6) |
-| `test_format_run_*` | ✓ Formatowanie (bold, italic itp.) |
-| `test_table_to_markdown` | ✓ Konwersja tabel DOCX |
-| `test_convert_nonexistent_file` | ✓ Obsługa błędów |
+| Test | Purpose |
+|------|---------|
+| `test_converter_exists` | ✓ Converter exists |
+| `test_get_header_level_*` | ✓ Header levels (1-6) |
+| `test_format_run_*` | ✓ Formatting (bold, italic, etc.) |
+| `test_table_to_markdown` | ✓ DOCX table conversion |
+| `test_convert_nonexistent_file` | ✓ Error handling |
 
 ### Image Converter
 
-| Test | Cel |
-|------|-----|
-| `test_converter_exists` | ✓ Konwerter istnieje |
-| `test_get_mime_type_*` | ✓ MIME types dla formatów |
-| `test_convert_nonexistent_image` | ✓ Obsługa błędów |
+| Test | Purpose |
+|------|---------|
+| `test_converter_exists` | ✓ Converter exists |
+| `test_get_mime_type_*` | ✓ MIME types for formats |
+| `test_convert_nonexistent_image` | ✓ Error handling |
 
-## Pokrycie kodu (Coverage)
+## Code coverage
 
-### Generowanie raportu pokrycia
+### Generate coverage report
 
 ```bash
-# Instalacja (jeśli potrzebna)
+# Installation (if needed)
 pip install pytest-cov
 
-# Generowanie raportu HTML
+# Generate HTML report
 pytest --cov=converters --cov=main --cov=utils --cov-report=html
 
-# Raport będzie w: htmlcov/index.html
+# Report will be in: htmlcov/index.html
 ```
 
-### Oczekiwane pokrycie
+### Expected coverage
 
 - **converters/**: >90%
 - **main.py**: >85%
 - **utils.py**: >85%
 - **config.py**: >80%
 
-## Mocking i Fixtures
+## Mocking and Fixtures
 
-Testy używają `unittest.mock` do mockowania:
-- Objektów `docx.text.paragraph.CT_P`
-- Tabel i komórek dokumentów
-- Konfiguracji OCR
+Tests use `unittest.mock` for mocking:
+- `docx.text.paragraph.CT_P` objects
+- Document tables and cells
+- OCR configuration
 
-## Przykłady uruchamiania
+## Running examples
 
-### Szybkie testy
+### Quick tests
 
 ```bash
-# Tylko krytyczne testy
+# Only critical tests
 python -m unittest tests.test_converters -v
 ```
 
-### Pełny test z raportem
+### Full test with report
 
 ```bash
-# Wszystkie testy z pokryciem
+# All tests with coverage
 pytest --cov=converters --cov=main --cov=utils \
        --cov-report=html --cov-report=term -v
 ```
 
-### Monitorowanie zmian
+### Monitor changes
 
 ```bash
-# Uruchamiaj testy po każdej zmianie (wymaga pytest-watch)
+# Run tests after every change (requires pytest-watch)
 pip install pytest-watch
 ptw
 ```
 
-## Rozwiązywanie problemów
+## Troubleshooting
 
 ### ImportError: No module named 'converters'
 
-**Rozwiązanie:**
+**Solution:**
 ```bash
-# Uruchom z głównego katalogu
+# Run from main directory
 cd /path/to/python-transform
 python run_tests.py
 ```
 
 ### Test timeout
 
-**Rozwiązanie:**
+**Solution:**
 ```bash
-# Zwiększ timeout
+# Increase timeout
 pytest --timeout=300
 ```
 
-### Problemy z pytest
+### pytest issues
 
-**Rozwiązanie:**
+**Solution:**
 ```bash
-# Używaj unittest zamiast pytest
+# Use unittest instead of pytest
 python -m unittest discover -s tests
 ```
 
 ## Best Practices
 
-1. **Izolacja testów** - Każdy test jest niezależny
-2. **Czyszczenie** - `tearDown()` czyści zasoby
-3. **Descriptive names** - Nazwy opisują co test sprawdza
-4. **Docstrings** - Każdy test ma opis
-5. **Mocking** - Mockuj zewnętrzne zależności
-6. **Fixtures** - Reużywalne dane testowe w `setUp()`
+1. **Test isolation** - Each test is independent
+2. **Cleanup** - `tearDown()` cleans resources
+3. **Descriptive names** - Names describe what test checks
+4. **Docstrings** - Each test has description
+5. **Mocking** - Mock external dependencies
+6. **Fixtures** - Reusable test data in `setUp()`
 
 ## CI/CD Integration
 
@@ -283,34 +283,34 @@ jobs:
       - run: pytest --cov
 ```
 
-## Dodawanie nowych testów
+## Adding new tests
 
 ### Template
 
 ```python
 class TestNewFeature(unittest.TestCase):
-    """Testy dla nowej funkcji."""
+    """Tests for new feature."""
     
     def setUp(self):
-        """Przygotowanie."""
+        """Preparation."""
         pass
     
     def test_basic_functionality(self):
-        """Test funkcjonalności."""
+        """Test functionality."""
         result = some_function()
         self.assertIsNotNone(result)
     
     def test_error_handling(self):
-        """Test obsługi błędów."""
+        """Test error handling."""
         with self.assertRaises(ExpectedException):
             some_function(invalid_input)
     
     def tearDown(self):
-        """Czyszczenie."""
+        """Cleanup."""
         pass
 ```
 
-## Statystyki testów
+## Test statistics
 
 ```
 Unit Tests:       25+
