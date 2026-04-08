@@ -90,7 +90,8 @@ class DocumentConverter:
             if file_ext in ['.png', '.jpg', '.jpeg', '.bmp', '.gif', '.tiff', '.webp']:
                 markdown_content = converter.convert(input_path, use_ocr=use_ocr)
             else:
-                markdown_content = converter.convert(input_path)
+                # For PDFs and DOCX, also pass use_ocr in case the PDF is image-based
+                markdown_content = converter.convert(input_path, use_ocr=use_ocr)
             
             if markdown_content:
                 with open(output_path, 'w', encoding='utf-8') as f:

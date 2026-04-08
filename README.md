@@ -4,10 +4,10 @@ Script for converting documents (PDF, DOCX) and images (PNG, JPG, etc.) to Markd
 
 ## Features
 
-- ✅ **PDF Conversion** - Extract text and tables from PDF files
+- ✅ **PDF Conversion** - Extract text and tables from PDF files, with OCR support for image-based PDFs
 - ✅ **DOCX Conversion** - Support for formatting, headers, tables
 - ✅ **Image Conversion** - PNG, JPG, BMP, GIF, TIFF, WebP
-- ✅ **OCR for images** - Optional text extraction from images
+- ✅ **OCR for images and PDFs** - Optional text extraction from images and scanned PDFs
 - ✅ **Batch Conversion** - Process entire directories
 - ✅ **Recursive Conversion** - Support for subdirectories
 
@@ -118,6 +118,16 @@ python main.py ./documents -d -r
 ```bash
 python main.py ./images -d --ocr
 ```
+
+### OCR for scanned PDFs
+
+For PDFs that contain scanned images or text embedded as images:
+
+```bash
+python main.py scanned_document.pdf --ocr
+```
+
+This will extract text from image-based PDFs using OCR technology.
 
 Extract text from images (requires Tesseract-OCR)
 
